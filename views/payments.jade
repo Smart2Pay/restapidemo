@@ -1,0 +1,15 @@
+include mixins
+
++header("payments")
+
+.container
+	.jumbotron
+		h2 Information
+		p#infoline1
+			| ceva informatii
+		p#infoBody
+			//script $('#infoBody').append(contentParse(!{JSON.stringify(info.body)}))
+			!{JSON.stringify(info.body)}
+			
+
++footer
