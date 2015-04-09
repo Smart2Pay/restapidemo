@@ -1,39 +1,38 @@
 var express = require('express')
 var jade = require('jade')
-var logger = require('morgan');
+var morgan = require('morgan')
+var config = require('./config/routes')
+var passport = require('passport')
+var should = require('should')
+var mocha = require('mocha')
+var winston = require('winston')
+var mylogger = require('./node_modules_my/logger')
 
+//initialize app server
 var app = express()
 
+//initilize logging for app server
+app.use(morgan('dev', {immediate: true}))
+
+//initialize logger singleton
+var logger = mylogger()
+
+//setup view engine
 app.set('view engine', 'jade')
 app.set('views', __dirname + '/views');
 
-try{
 
-	var renderIndex = jade.compileFile('./views/index.jade', 
-		{pretty: true})
+// bootstrap routes
+require('./config/routes')(app, passport);
+app.use(express.static('public'));
 
-	var htmlIndex  =  renderIndex()
+// start app server
+var server = app.listen(3000, function(){
+	var host = server.address().address
+	var port = server.address().port
 
-	var renderAbout = jade.compileFile('./views/about.jade', 
-		{pretty: true})
+	logger.info('Server listening on ' + host + ':' + port)
+})
 
-	var htmlAbout  =  renderAbout({info: {line1 : "This is dynamic"}})
 
-	app.get('/', function(req, res){
-		res.send(htmlIndex)
-	})
-
-	app.get('/about', function(req, res){
-		res.send(htmlAbout)
-	})
-
-	var server = app.listen(3000, function(){
-		var host = server.address().address
-		var port = server.address().port
-
-		console.log('Server listening on ' + host + ':' + port)
-	})
-}
-catch(error){
-	console.log('Error: ' + error)
-}
+module.exports = app;

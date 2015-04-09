@@ -5,6 +5,14 @@
 	"dependencies": {
 		"express": "latest",
 		"jade": "latest",
-		"morgan": "latest"
+		"morgan": "latest",
+		"passport": "latest",
+		"should": "latest",
+		"mocha": "latest",
+		"supertest" : "latest",
+		"request" : "latest",
+		"winston" : "latest",
+		"config" : "latest",
+		"mout" : "latest"
 	}
 }

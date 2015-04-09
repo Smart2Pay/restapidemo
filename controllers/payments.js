@@ -1,30 +1,46 @@
 var jade = require('jade')
 var request = require('request')
+var fs = require('fs');
+var winston = require('winston')
+var config = require('config');
+var mylogger = require('../node_modules_my/logger')
+
+var logger = mylogger()
 
 exports.index = function(req, res){
-	var renderPayments = jade.compileFile('./views/payments.jade', 
-	{pretty: true})
+
+	var renderPayments = jade.compileFile('./views/payments.jade', {pretty: true})
  	
+	
+	logger.info('APIKEY:' + config.util.getEnv('APIKEY'))
+
 	var options = {
-		 url: 'https://paytest.smart2pay.com/v1/payments',
+		 url: config.get('env.host') + '/payments',
     	 headers: {
-        	'Authorization': 'Basic VWhsT0xtb0RGbzFaSEdWekx1N0hxNGhWUEhZY3VQUUg6'
+        	'Authorization': 'Basic '+ config.util.getEnv('APIKEY')
     	}
 	}
 
-	request.get(options, function (error, response, body) {
-				  var info = {info: {body : contentParse(body)}}
-					
-				  if (!error && response.statusCode == 200) {
-				    console.log(body) 
+	logger.info(options)
 
-				  }
-				  else{
-				  	console.log(error) 
-				  }
-				  var htmlPayments  =  renderPayments(info)
-				  res.send(htmlPayments)
-				})
+	request.get(options, function (error, response, body) {				  
+		  
+		  var parsedBody = null
+		  if (!error && response.statusCode == 200) {
+		  	
+		    logger.info(body)
+		    parsedBody = contentParse(body)
+		  }
+		  else{
+		  	logger.error(response.statusCode)
+		  	parsedBody = ''
+		  }
+		  
+		  var info = {info: {body : parsedBody}}
+		  var htmlPayments  =  renderPayments(info)
+		  res.send(htmlPayments)
+		
+		})
 }
 
 function contentParse(content){

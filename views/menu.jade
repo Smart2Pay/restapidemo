@@ -1,12 +1,10 @@
 +nav("Project name", "dropdown_menu")
 	+nav_item( "/", "active" ) Home
 	+nav_item( "/about" ) About
-	+nav_item( "#" ) Contact
-	+nav_item_dropdown( "#" )( label="Dropdown")
-		+nav_item( "#" ) Action
-		+nav_item( "#" ) Another action
-		+nav_item( "#" ) Something else here
+	+nav_item_dropdown( "#" )( label="Payments")
+		+nav_item( "/payments/create" ) Create
+		+nav_item( "#" ) Get
+		+nav_item( "#" ) Get with filters
 		+nav_divider
 		+nav_header Nav header
-		+nav_item( "#" ) Separated link
-		+nav_item( "#" ) One more separated link
+		+nav_item( "#" ) Patch
