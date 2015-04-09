@@ -27,7 +27,7 @@ require('./config/routes')(app, passport);
 app.use(express.static('public'));
 
 // start app server
-var server = app.listen(3000, function(){
+var server = app.listen(3000, 'restapi.azurewebsites.net', function(){
 	var host = server.address().address
 	var port = server.address().port
 
