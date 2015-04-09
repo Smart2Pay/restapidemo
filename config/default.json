@@ -1,0 +1,5 @@
+{
+	"env" : {
+		"host" : "https://paytest.smart2pay.com/v1"
+	}
+}
