@@ -1,0 +1,26 @@
+.editable{
+	border: 1px solid lightgrey;
+	height: auto;
+	display: block;
+	font-family: monospace;
+    white-space: pre-wrap;
+}
+
+.response{
+	width: auto;
+	min-height: 200px;
+	clear: both;
+}
+
+.header{
+	width: auto;
+	min-height: 20px;	
+	clear: both;
+}
+
+
+.label{
+	font-size: 0.2em;
+	color: grey;
+	float: left;
+}

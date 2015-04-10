@@ -1,0 +1,25 @@
+extends _shared.jade
+
+block title
+	title Payment Create
+
+block content
+	.container(ng-controller="paymentsCtrl")
+		.jumbotron
+			h2 Payment Creation
+			.container
+				.col-md-5
+					p
+						|Various felds
+				.col-md-7
+					p.label Authorization
+						.editable.header(name="requestHeader" ng-model="requestHeader" ng-bind-html="requestHeader" contenteditable)
+					p.label Body
+						.editable.response(name="requestBody" ng-model="requestBody" ng-bind-html="requestBody | formatText" contenteditable)
+			.container
+				.editable.header(name="responseStatusCode" ng-model="responseStatusCode") 
+				.editable.header(name="responseHeader" ng-model="responseHeader")
+				.editable.response(name="responseBody" ng-model="responseBody" ng-bind-html="responseBody | formatText")
+			input(type='button', value='Pay' ng-click="post()").btn.btn-default
+			
+
