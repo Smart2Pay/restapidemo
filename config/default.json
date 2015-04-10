@@ -1,5 +1,24 @@
 {
 	"env" : {
 		"host" : "https://paytest.smart2pay.com/v1"
+	},
+	"testData" : {
+		"APIKEY" : "VWhsT0xtb0RGbzFaSEdWekx1N0hxNGhWUEhZY3VQUUg6",
+		"body" : {
+		    "Payment": {
+		        "MerchantTransactionID": "8888888877101",
+		        "Amount": "100",
+		        "Currency": "EUR",
+		        "ReturnURL": "http://demo.smart2pay.com/redirect.php",
+		        "Customer": {
+		            "FirstName": "John",
+		            "LastName": "Doe",
+		            "Email": "john@merchant.com"
+		        },
+		        "BillingAddress":{
+		            "Country": "nl"
+		        }
+		    }
+		}
 	}
 }

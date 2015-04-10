@@ -13,6 +13,8 @@
 		"request" : "latest",
 		"winston" : "latest",
 		"config" : "latest",
-		"mout" : "latest"
+		"mout" : "latest",
+		"angular": "latest",
+		"angular-sanitize": "latest"
 	}
 }
