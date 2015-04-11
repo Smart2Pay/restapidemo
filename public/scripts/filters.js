@@ -17,9 +17,9 @@ paymentsApp.filter('cleanJson', function (){
   return function(input) {
     if(!input) return input;
     var output = input
-      //replace possible line breaks.
       .replace(/(<br>)/g, '')
       .replace(/ /g, '')
+      .replace(/&nbsp;/g, '')
 
       return output;
   };
