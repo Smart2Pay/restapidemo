@@ -1,10 +1,29 @@
-+nav("Project name", "dropdown_menu")
-	+nav_item( "/", "active" ) Home
-	+nav_item( "/about" ) About
-	+nav_item_dropdown( "#" )( label="Payments")
-		+nav_item( "/payments/create" ) Create
-		+nav_item( "#" ) Get
-		+nav_item( "#" ) Get with filters
-		+nav_divider
-		+nav_header Nav header
-		+nav_item( "#" ) Patch
++nav("GLOBALPAY DEMO", "dropdown_menu")
+	+nav_item_dropdown( "paymentsCtrl" )( label="Payments")
+		+nav_item( "ng-click(init())" ) Create
+		//+nav_item( "" ) Get
+		//+nav_item( "" ) Get with filters
+		//+nav_divider
+		//+nav_header Nav header
+		//+nav_item( "" ) Patch
+	//+nav_item_dropdown( "" )( label="Methods")
+		//+nav_item( "" ) Create
+		//+nav_item( "" ) Get
+		//+nav_item( "" ) Get with filters
+		//+nav_divider
+		//+nav_header Nav header
+		//+nav_item( "" ) Patch
+	//+nav_item_dropdown( "#" )( label="Refunds")
+		//+nav_item( "" ) Create
+		//+nav_item( "" ) Get
+		//+nav_item( "" ) Get with filters
+		//+nav_divider
+		//+nav_header Nav header
+		//+nav_item( "" ) Patch
+	//+nav_item_dropdown( "" )( label="Recurrent")
+		//+nav_item( "" ) Create
+		//+nav_item( "" ) Get
+		//+nav_item( "" ) Get with filters
+		//+nav_divider
+		//+nav_header Nav header
+		//+nav_item( "" ) Patch

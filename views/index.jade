@@ -1,12 +1,31 @@
 include mixins
 
-+header("index")
+-var ctrl = ngController
 
++header("REST API DEMO", ctrl)
 
-.container#cucumare
-	.jumbotron
-		h2 Information
-		p#infoline1
-			| ceva2
+block content
+	.container
+		.jumbotron
+			h2 
+				=viewName
+			.container
+				.col-md-5
+					p
+						|Various fields
+				.col-md-7
+					p.label Authorization
+						.editable.header(name="requestHeader" ng-model="requestHeader" ng-bind-html="requestHeader" contenteditable)
+					p.label Body
+						.editable.response(name="requestBody" ng-model="requestBody" ng-bind-html="requestBody | formatText" contenteditable)
+			.container
+				.editable.header(name="responseStatusCode" ng-model="responseStatusCode") 
+				.editable.header(name="responseHeader" ng-model="responseHeader")
+				.editable.response(name="responseBody" ng-model="responseBody" ng-bind-html="responseBody | formatText")
+			input(type='button', value='Pay' ng-click="post()").btn.btn-default
 			
-+footer
+
+block footer
+	+wait()
+	+footer()
+

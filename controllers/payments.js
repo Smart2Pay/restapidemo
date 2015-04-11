@@ -7,16 +7,10 @@ var mylogger = require('../node_modules_my/logger')
 
 var logger = mylogger()
 
-exports.create = function(req, res){
-	var renderPayments = jade.compileFile('./views/paymentsCreate.jade', {pretty: true})
- 	var htmlPayments  =  renderPayments()
-	res.send(htmlPayments)
-
-}
-
 exports.init = function(req,res){
-	res.send(config.get('testData'))
-}
+		res.send(config.get('testData'))
+	}
+
 
 exports.post = function(req, res){
 	var message = {};

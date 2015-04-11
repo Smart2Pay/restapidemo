@@ -6,13 +6,13 @@
     white-space: pre-wrap;
 }
 
-.response{
+.editable.response{
 	width: auto;
 	min-height: 200px;
 	clear: both;
 }
 
-.header{
+.editable.header{
 	width: auto;
 	min-height: 20px;	
 	clear: both;
@@ -24,3 +24,18 @@
 	color: grey;
 	float: left;
 }
+
+.wait{
+	background-color: #CCC;
+	filter:alpha(opacity=60); /* IE */
+	-moz-opacity:0.6; /* Mozilla */
+	opacity: 0.6; /* CSS3 */
+	position: fixed; 
+	top: 0; 
+	left: 0;
+	min-width:100%;
+	min-height: 100%;
+	z-index: 1001;
+	display: none;
+}
+
