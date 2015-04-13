@@ -85,14 +85,11 @@
 .accordion-inner{
 	padding-top: 0.5em;
 	padding-bottom: 1em;
+	font-size:1.7em;
 }
 
-.accordion-heading{
-	font-size: 1.3em;
-}
-
-.accordion-heading :{
-	font-size: 1.3em;
+.accordion-heading {
+	font-size: 2em;
 }
 
 .accordion-group{
@@ -109,6 +106,7 @@
 
 .payButton{
 	float: right;
+	font-size:2em;
 }
 
 .editable{
@@ -133,8 +131,8 @@
 }
 
 
-.label{
-	font-size: 1em;
+.contentWrapper .label{
+	font-size: 2.5em;
 	color: grey;
 	float: left;
 	padding:0em;
@@ -176,5 +174,23 @@
 		cursor: pointer; cursor: hand;
 		float:right;
 		font-size: 1em;
+	}
+
+	.contentWrapper .label{
+		font-size: 1.5em;
+
+	}
+
+	.accordion-heading {
+		font-size: 1.3em;
+	}
+
+	.accordion-inner{
+		font-size:1em;
+	}
+
+	.payButton{
+		float: right;
+		font-size:1.1em;
 	}
 }
