@@ -1,5 +1,19 @@
 
 
+.title{
+	text-weight: bold;
+	font-size: 2.5em;
+	float:left;
+}
+
+.icons{
+	text-align: center;
+	cursor: pointer; cursor: hand;
+	float:right;
+	font-size: 2em;
+}
+
+
 .navbar{
 	margin-bottom: 0.3em;
 }
@@ -149,3 +163,18 @@
 	display: none;
 }
 
+
+@media (min-width: 600px){
+	.title{
+		text-weight: bold;
+		float:left;
+		font-size:1.5em;
+	}
+
+	.icons{
+		text-align: center;
+		cursor: pointer; cursor: hand;
+		float:right;
+		font-size: 1em;
+	}
+}
