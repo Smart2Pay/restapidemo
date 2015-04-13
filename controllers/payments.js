@@ -43,7 +43,7 @@ exports.post = function(req, res){
 		}  	     
 		logger.info(options)
 		request.post(options, function (error, response, body){
-			 var parsedBody = null
+			  var data = {}
 			  parsedBody = contentParse(body)
 			  if (!error && response.statusCode >= 200 && response.statusCode < 300) {
 			  	
@@ -55,7 +55,10 @@ exports.post = function(req, res){
 			  	
 			  }
 			  logger.info(body)
-			  res.send(JSON.stringify(parsedBody))
+			  data.headers = response.headers
+			  data.statusCode = response.statusCode
+			  data.body = parsedBody
+			  res.send(JSON.stringify(data))
 		})
 
 	})

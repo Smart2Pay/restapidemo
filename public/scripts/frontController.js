@@ -110,16 +110,21 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter) {
 				body: $filter('cleanJson')($scope.requestBody)
 			}
 		}
-		console.log('starting post2')
+		//console.log('starting post2')
 
 		$('.wait').show()
 
 		$http(req)
 				.success(function(data) {
-					$scope.responseBody = JSON.parse(data)
+					console.log(data.headers)
+					$scope.responseBody = data.body
+					$scope.responseStatusCode = data.statusCode
+					$scope.responseHeader = JSON.stringify(data.headers, null, "  ")
+			
 					console.log($scope.responseBody)
 					$('.wait').hide()
 					//$scope.responseHeader = data.header
+						
 				})
 	}
 })

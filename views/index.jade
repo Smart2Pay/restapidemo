@@ -26,9 +26,9 @@ block content
 						p.label Body
 							.editable.response(name="requestBody" ng-model="requestBody" ng-bind-html="requestBody | formatText" contenteditable)
 						p.label Response Status Code
-							.editable.header(name="responseStatusCode" ng-model="responseStatusCode") 
+							.editable.header(name="responseStatusCode" ng-model="responseStatusCode" ng-bind-html="responseStatusCode") 
 						p.label Response Headers
-							.editable.header(name="responseHeader" ng-model="responseHeader")
+							.editable.header(name="responseHeader" ng-model="responseHeader" ng-bind-html="responseHeader")
 						p.label Response Body
 							.editable.response(name="responseBody" ng-model="responseBody" ng-bind-html="responseBody | formatText")
 	
