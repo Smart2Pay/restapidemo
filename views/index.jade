@@ -7,23 +7,31 @@ include mixins
 block content
 	.container
 		.jumbotron
-			h2 
-				=viewName
-			.container
-				.col-md-5
-					p
-						|Various fields
-				.col-md-7
-					p.label Authorization
-						.editable.header(name="requestHeader" ng-model="requestHeader" ng-bind-html="requestHeader" contenteditable)
-					p.label Body
-						.editable.response(name="requestBody" ng-model="requestBody" ng-bind-html="requestBody | formatText" contenteditable)
-			.container
-				.editable.header(name="responseStatusCode" ng-model="responseStatusCode") 
-				.editable.header(name="responseHeader" ng-model="responseHeader")
-				.editable.response(name="responseBody" ng-model="responseBody" ng-bind-html="responseBody | formatText")
-			input(type='button', value='Pay' ng-click="post()").btn.btn-default
-			
+			.jumbotronHeader.clearfix
+					.title
+							=viewName
+					.icons
+						a(ng-click="init()")
+							i.fa.fa-refresh
+						a(onclick="toggleTech()")
+							i.fa.fa-indent
+			.contentWrapper#payments
+				.row
+					.col-md-5.clearfix#checkout
+							include checkout
+							input(type='button', value='Pay' ng-click="post()").btn.btn-default.payButton
+					.col-md-7#tech
+						p.label Authorization
+							.editable.header(name="requestHeader" ng-model="requestHeader" ng-bind-html="requestHeader" contenteditable)
+						p.label Body
+							.editable.response(name="requestBody" ng-model="requestBody" ng-bind-html="requestBody | formatText" contenteditable)
+						p.label Response Status Code
+							.editable.header(name="responseStatusCode" ng-model="responseStatusCode") 
+						p.label Response Headers
+							.editable.header(name="responseHeader" ng-model="responseHeader")
+						p.label Response Body
+							.editable.response(name="responseBody" ng-model="responseBody" ng-bind-html="responseBody | formatText")
+	
 
 block footer
 	+wait()

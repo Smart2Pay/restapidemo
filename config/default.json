@@ -4,10 +4,16 @@
 	},
 	"testData" : {
 		"APIKEY" : "VWhsT0xtb0RGbzFaSEdWekx1N0hxNGhWUEhZY3VQUUg6",
-		"body" : {
-		    "Payment": {
+		"Payment": {
+		        "MerchantTransactionID": "1",
+		        "Amount": "0",
+		        "Currency": "EUR",
+		        "ReturnURL": "http://demo.smart2pay.com/redirect.php"
+		}
+		/*,
+		"Payment": {
 		        "MerchantTransactionID": "8888888877101",
-		        "Amount": "100",
+		        "Amount": "0",
 		        "Currency": "EUR",
 		        "ReturnURL": "http://demo.smart2pay.com/redirect.php",
 		        "Customer": {
@@ -18,7 +24,29 @@
 		        "BillingAddress":{
 		            "Country": "nl"
 		        }
-		    }
 		}
-	}
+*/		
+	},
+	"products" : 
+		[
+			{
+				"name" : "Basket ball",
+				"price": 6500,
+				"currency": "EUR",
+				"icon" : "products/ball_basketball_icon.jpg"
+			},
+			{
+				"name" : "Tennis ball",
+				"price": 500,
+				"currency": "EUR",
+				"icon" : "products/ball_tennis_icon.jpg"
+			},
+			{
+				"name" : "Football",
+				"price": 2500,
+				"currency": "EUR",
+				"icon" : "products/ball_football_icon.jpg"
+			}
+		]
+	
 }

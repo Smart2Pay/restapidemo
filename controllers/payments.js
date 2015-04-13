@@ -2,13 +2,23 @@ var jade = require('jade')
 var request = require('request')
 var fs = require('fs');
 var winston = require('winston')
-var config = require('config');
 var mylogger = require('../node_modules_my/logger')
-
 var logger = mylogger()
 
+var config = require('config');
+process.env['ALLOW_CONFIG_MUTATIONS'] = true //needed to change MerchantTransactionID (!!!)
+
+
 exports.init = function(req,res){
-		res.send(config.get('testData'))
+		var paymentRequest = config.get('testData')
+		var num = Math.ceil(Math.random()*10000000)
+		paymentRequest.Payment.MerchantTransactionID = num
+		res.send(paymentRequest)
+	}
+
+exports.initCheckout = function(req,res){
+		var products = config.get('products')
+		res.send(products)
 	}
 
 

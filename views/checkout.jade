@@ -1,0 +1,47 @@
+p.label
+  |Shopping flow  
+.accordion#accordion2
+
+  .accordion-group
+    .accordion-heading
+      a(class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne")
+        | Add item to cart
+    #collapseOne.accordion-body.collapse.in
+      .accordion-inner#products
+        div(ng-repeat="product in products track by $index" )
+          input( type="checkbox" group="checkout" ng-click="updateShoppingCart()" ng-model="shoppingCart[$index]")
+          &nbsp; {{product.name}} ({{product.price}} {{product.currency}})  
+  
+
+  .accordion-group
+    .accordion-heading
+      a(class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo")
+        | Billing address
+    #collapseTwo.accordion-body.collapse
+      .accordion-inner
+        div.control-group
+          //label(for='country',class='control-label') Country [NL]
+          div.controls
+            input(type='text',name="country",id="country",ng-model="billingAddress.country",ng-change="billingAddressChanged()",placeholder='Country',class='input')
+        div.control-group
+          //label(for='firstName',class='control-label') First Name
+          div.controls
+            input(type='text',ng-model="customer.firstName",ng-change="billingAddressChanged()",placeholder='First Name',class='input')
+        div.control-group
+          //label(for='LastName',class='control-label') Last Name
+          div.controls
+            input(type='text',ng-model="customer.lastName",ng-change="billingAddressChanged()",placeholder='Last Name',class='input')
+        div.control-group
+          //label(for='email',class='control-label') Email
+          div.controls
+            input(type='text',ng-model="customer.email",ng-change="billingAddressChanged()",placeholder='Email',class='input' required="")
+
+  .accordion-group
+    .accordion-heading
+      a(class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree")
+        | Choose payment method
+    #collapseThree.accordion-body.collapse
+      .accordion-inner
+        | Anim pariatur cliche...
+      
+  
