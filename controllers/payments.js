@@ -1,6 +1,7 @@
 var jade = require('jade')
 var request = require('request')
-var fs = require('fs');
+var fs = require('fs')
+var url = require('url')
 var winston = require('winston')
 var mylogger = require('../node_modules_my/logger')
 var logger = mylogger()
@@ -22,13 +23,31 @@ exports.initCheckout = function(req,res){
 	}
 
 
+exports.methods = function(req,res){
+	 var paymentRequest = config.get('testData')
+     var options = {
+			 url: config.get('env.host') + '/methods?country='+req.query.country,
+	    	 headers: {
+	        	"Authorization": "Basic " + paymentRequest.APIKEY
+	    	}
+		}  	   
+	console.log(options)
+    request.get(options, function (error, response, body) { 
+			var data = {}
+			console.log(error)
+			console.log(body)
+			res.send(body)
+		
+	})
+}
+
+
 exports.post = function(req, res){
 	var message = {};
     req.on('data', function (data) {
     	
-        message = JSON.parse(data);
-        //console.log(message)
-        if (message.length > 1e6)
+        message = JSON.parse(data);        
+    	if (message.length > 1e6)
             req.connection.destroy();
 
     });

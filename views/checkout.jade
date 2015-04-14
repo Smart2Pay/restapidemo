@@ -22,7 +22,7 @@ p.label
         div.control-group
           //label(for='country',class='control-label') Country [NL]
           div.controls
-            input(type='text',name="country",id="country",ng-model="billingAddress.country",ng-change="billingAddressChanged()",placeholder='Country',class='input')
+            input(type='text',name="country",id="country", ng-model="billingAddress.country", ng-model-options="{ updateOn: 'blur' }",ng-change="billingAddressChanged()",placeholder='Country',class='input')
         div.control-group
           //label(for='firstName',class='control-label') First Name
           div.controls
@@ -34,7 +34,7 @@ p.label
         div.control-group
           //label(for='email',class='control-label') Email
           div.controls
-            input(type='text',ng-model="customer.email",ng-change="billingAddressChanged()",placeholder='Email',class='input' required="")
+            input(type='text',ng-model="customer.email",ng-change="billingAddressChanged()",placeholder='Email',class='input' )
 
   .accordion-group
     .accordion-heading
@@ -42,6 +42,9 @@ p.label
         | Choose payment method
     #collapseThree.accordion-body.collapse
       .accordion-inner
-        | Anim pariatur cliche...
+        div(ng-repeat="method in methods.Methods" )
+          input( type="radio" name="methodsRadio" ng-click="updatePaymentMethod()" ng-model="$parent.paymentMethod" value="{{method.ID}}") 
+          img(src= "https://apitest.smart2pay.com/{{method.LogoURL}}")
       
+input(type='button', value='Pay' ng-click="post()").btn.btn-default.payButton    
   
