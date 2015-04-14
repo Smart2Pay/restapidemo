@@ -198,4 +198,9 @@
 		float: right;
 		font-size:1.1em;
 	}
+
+	#collapseThree img{
+		margin: 1em 1em;
+		max-height: 2em;
+}
 }
