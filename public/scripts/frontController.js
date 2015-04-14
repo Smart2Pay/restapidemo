@@ -28,6 +28,7 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter) {
 		       }
 		       console.log($scope.products)
 		       $scope.updateShoppingCart()
+		       $scope.tempMessage = "Please choose your country first..."
 		    });   
 	    });	
 
@@ -51,16 +52,31 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter) {
 	$scope.billingAddressChanged = function(){
 		var payment = JSON.parse($scope.requestBody)
 		if($scope.billingAddress && $scope.billingAddress.country){
+			$scope.methods = null
+			$scope.paymentMethod = null
 			payment.Payment.BillingAddress = {}
 			payment.Payment.BillingAddress.Country = $scope.billingAddress.country;	
+			delete payment.Payment.MethodID
 			var req = {url: '/payments/methods?country=' + $scope.billingAddress.country}
-			$http(req).success(function(data) {
-				$scope.methods = data
-			})
+			$scope.tempMessage = "Loading payment method list..."
+			$http(req)
+				.success(function(data) {
+					$scope.tempMessage = null
+					$scope.methods = data
+				})
+				.error(function(data, status, headers, config){
+					$scope.tempMessage = "Error loading payment methods (status code: " + status + ")"
+				})
+			
 
 		}
 		else{
 			delete payment.Payment.BillingAddress
+			delete payment.Payment.MethodID
+			$scope.methods = null
+			$scope.paymentMethod = null
+			$scope.tempMessage = "Please choose your country first..."
+
 		}
 		$scope.requestBody = JSON.stringify(payment, null, "  ")
 	}
@@ -69,9 +85,6 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter) {
 		var payment = JSON.parse($scope.requestBody)
 		if(!payment.Payment.Customer && $scope.customer){
 			payment.Payment.Customer = {}
-		}
-		if(!payment.Payment.BillingAdress && $scope.billingAddress){
-			payment.Payment.BillingAddress = {}
 		}
 
 		if($scope.customer){
@@ -105,7 +118,7 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter) {
 		$scope.requestBody = JSON.stringify(payment, null, "  ")
 	}
 
-	$scope.updatePaymentMethod = function(){
+	$scope.paymentMethodChanged = function(){
 		var payment = JSON.parse($scope.requestBody)
 		if($scope.paymentMethod){
 			payment.Payment.MethodID = $scope.paymentMethod

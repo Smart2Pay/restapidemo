@@ -43,8 +43,11 @@ p.label
     #collapseThree.accordion-body.collapse
       .accordion-inner
         div(ng-repeat="method in methods.Methods" )
-          input( type="radio" name="methodsRadio" ng-click="updatePaymentMethod()" ng-model="$parent.paymentMethod" value="{{method.ID}}") 
+          input( type="radio" name="methodsRadio" ng-click="paymentMethodChanged()" ng-model="$parent.paymentMethod" value="{{method.ID}}") 
           img(src= "https://apitest.smart2pay.com/{{method.LogoURL}}")
+        div(ng-model="tempMessage")
+          {{tempMessage}}
+        
       
 input(type='button', value='Pay' ng-click="post()").btn.btn-default.payButton    
   
