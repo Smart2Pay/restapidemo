@@ -28,6 +28,9 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter) {
 		       }
 		       console.log($scope.products)
 		       $scope.updateShoppingCart()
+
+		       $scope.methods = null
+		       $scope.paymentMethod = null
 		       $scope.tempMessage = "Please choose your country first..."
 		    });   
 	    });	
