@@ -16,21 +16,22 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter) {
 	       $scope.requestBody = JSON.stringify({Payment: data.Payment},null, "  ")
 	       console.log($scope.requestHeader)
 	       console.log($scope.requestBody)
+		   var reqInit = {url: '/payments/initCheckout'}
+		   $http(reqInit).success(function(dataInit) {
+		       $scope.products = dataInit;
+		       $scope.shoppingCart = []
+		       $scope.customer = null;
+		       $scope.billingAddress = null;
+		       $scope.shoppingCart[0] = true;
+		       for(var $i=1;$i<$scope.products.length;$i++){
+		       		$scope.shoppingCart[$i] = false
+		       }
+		       console.log($scope.products)
+		       $scope.updateShoppingCart()
+		    });   
 	    });	
 
-	    var req = {url: '/payments/initCheckout'}
-		$http(req).success(function(data) {
-	       $scope.products = data;
-	       $scope.shoppingCart = []
-	       $scope.customer = null;
-	       $scope.billingAddress = null;
-	       $scope.shoppingCart[0] = true;
-	       for(var $i=1;$i<$scope.products.length;$i++){
-	       		$scope.shoppingCart[$i] = false
-	       }
-	       console.log($scope.products)
-	       $scope.updateShoppingCart()
-	    });	
+	    	
 	}
 
 	$scope.updateShoppingCart = function(){
