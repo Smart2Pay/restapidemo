@@ -50,6 +50,23 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter) {
 
 	$scope.billingAddressChanged = function(){
 		var payment = JSON.parse($scope.requestBody)
+		if($scope.billingAddress && $scope.billingAddress.country){
+			payment.Payment.BillingAddress = {}
+			payment.Payment.BillingAddress.Country = $scope.billingAddress.country;	
+			var req = {url: '/payments/methods?country=' + $scope.billingAddress.country}
+			$http(req).success(function(data) {
+				$scope.methods = data
+			})
+
+		}
+		else{
+			delete payment.Payment.BillingAddress
+		}
+		$scope.requestBody = JSON.stringify(payment, null, "  ")
+	}
+
+	$scope.customerChanged = function(){
+		var payment = JSON.parse($scope.requestBody)
 		if(!payment.Payment.Customer && $scope.customer){
 			payment.Payment.Customer = {}
 		}
@@ -84,18 +101,7 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter) {
 				delete payment.Payment.Customer
 			}
 		}
-		if($scope.billingAddress && $scope.billingAddress.country){
-			payment.Payment.BillingAddress.Country = $scope.billingAddress.country;	
-
-			var req = {url: '/payments/methods?country=' + $scope.billingAddress.country}
-			$http(req).success(function(data) {
-				$scope.methods = data
-			})
-
-		}
-		else{
-			delete payment.Payment.BillingAddress
-		}
+		
 		$scope.requestBody = JSON.stringify(payment, null, "  ")
 	}
 

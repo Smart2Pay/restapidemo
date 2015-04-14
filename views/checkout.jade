@@ -26,15 +26,15 @@ p.label
         div.control-group
           //label(for='firstName',class='control-label') First Name
           div.controls
-            input(type='text',ng-model="customer.firstName",ng-change="billingAddressChanged()",placeholder='First Name',class='input')
+            input(type='text',ng-model="customer.firstName",ng-change="customerChanged()",placeholder='First Name',class='input')
         div.control-group
           //label(for='LastName',class='control-label') Last Name
           div.controls
-            input(type='text',ng-model="customer.lastName",ng-change="billingAddressChanged()",placeholder='Last Name',class='input')
+            input(type='text',ng-model="customer.lastName",ng-change="customerChanged()",placeholder='Last Name',class='input')
         div.control-group
           //label(for='email',class='control-label') Email
           div.controls
-            input(type='text',ng-model="customer.email",ng-change="billingAddressChanged()",placeholder='Email',class='input' )
+            input(type='text',ng-model="customer.email",ng-change="customerChanged()",placeholder='Email',class='input' )
 
   .accordion-group
     .accordion-heading
