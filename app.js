@@ -7,6 +7,7 @@ var should = require('should')
 var mocha = require('mocha')
 var winston = require('winston')
 var mylogger = require('./node_modules_my/logger')
+var os = require('os')
 
 //initialize app server
 var app = express()
@@ -30,9 +31,22 @@ app.use(express.static('public'));
 var server = app.listen(process.env.port || 3000, function(){
 	var host = server.address().address
 	var port = server.address().port
-
+	logOSInfo(logger)
 	logger.info('Server listening on ' + host + ':' + port)
 })
 
 
+function logOSInfo(logger){
+	logger.info('hostname: ',os.hostname())
+	logger.info('platform: ',os.platform())
+	logger.info('release: ', os.release())
+	logger.info('uptime: ',os.uptime())
+	logger.info('arch: ', os.arch())
+	logger.info('cpus: ', os.cpus().length)
+	logger.info('total mem: ', os.totalmem()/1024/1000000 + ' Gb')
+	logger.info('free mem: ', os.freemem()/1024/1000000 + ' Gb')
+}
+
 module.exports = app;
+
+
