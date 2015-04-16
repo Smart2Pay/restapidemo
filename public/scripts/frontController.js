@@ -64,12 +64,21 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter) {
 			$scope.tempMessage = "Loading payment method list..."
 			$http(req)
 				.success(function(data) {
-					$scope.tempMessage = null
-					$scope.methods = data
+					if(!data.Methods){
+						$scope.tempMessage = "No methods found for country: '" + payment.Payment.BillingAddress.Country + "'" 
+ 					}
+					else{
+						$scope.tempMessage = null
+						$scope.methods = data
+					}
+
+					
 				})
 				.error(function(data, status, headers, config){
-					$scope.tempMessage = "Error loading payment methods (status code: " + status + ")"
+
+					$scope.tempMessage = "Error loading payment methods: " + data.Message
 				})
+
 			
 
 		}

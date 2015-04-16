@@ -36,6 +36,7 @@ exports.methods = function(req,res){
 			var data = {}
 			console.log(error)
 			console.log(body)
+			res.statusCode = response.statusCode
 			res.send(body)
 		
 	})
