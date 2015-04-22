@@ -197,6 +197,10 @@
 	display: none;
 }
 
+.modal-dialog{
+	min-width: 50em;
+}
+
 .modal-body{
 	min-height: 20em;
 }

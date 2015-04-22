@@ -7,9 +7,9 @@
 				.h4
 					|Settings
 			.modal-body
-				.div(contenteditable ng-bind-html="appSettings")
+				.div(contenteditable ng-bind-html="appSettings | formatText" ng-model="appSettings")
 			.modal-footer
 				button(class="btn btn-default" data-dismiss="modal")
 					| Close
-				button(class="btn btn-primary" ng-click="saveSettings()")
-					| Save changes
+				button(class="btn btn-primary" ng-click="applySettings()")
+					| Apply changes

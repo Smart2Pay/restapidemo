@@ -14,7 +14,7 @@ exports.init = function(req,res){
 		var paymentRequest = config.get('testData')
 		var num = Math.ceil(Math.random()*10000000)
 		paymentRequest.Payment.MerchantTransactionID = num
-		paymentRequest.BasicAuth = new Buffer(paymentRequest.APIKEY).toString('base64')
+		//paymentRequest.BasicAuth = new Buffer(paymentRequest.APIKEY).toString('base64')
 		
 		res.send(paymentRequest)
 	}

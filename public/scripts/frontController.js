@@ -1,19 +1,28 @@
-var paymentsApp = angular.module('paymentsApp', ['ngSanitize']);
+var paymentsApp = angular.module('paymentsApp', ['ngSanitize', 'ngStorage']);
 
 
-paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter) {
+paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localStorage) {
 	
 	angular.element(document).ready(function () {
         $scope.init()
     });
 
+	$scope.applySettings = function(){
+		$scope.requestHeader = window.btoa(JSON.parse($filter('cleanJson')($scope.appSettings)).APIKEY)
+		$localStorage.appSettings = $filter('cleanJson')($scope.appSettings)
+	}
+
 
 	$scope.init = function(){
-		
 		var req = {url: '/payments/init'}
 		$http(req).success(function(data) {
-			$scope.appSettings = JSON.stringify(data, null, "  ") //check if anything in local storage	
-	      	$scope.requestHeader = data.BasicAuth
+			if($localStorage.appSettings){
+				$scope.appSettings = $localStorage.appSettings //check if anything in local storage	
+			}
+			else{
+				$scope.appSettings = JSON.stringify(data, null, "  ")
+			}
+	      	$scope.requestHeader = window.btoa(JSON.parse($filter('cleanJson')($scope.appSettings)).APIKEY)
 			$scope.requestBody = JSON.stringify({Payment: data.Payment},null, "  ")
 			console.log($scope.requestHeader)
 			console.log($scope.requestBody)

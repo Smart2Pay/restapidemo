@@ -14,7 +14,7 @@
     "tests"
   ],
   "dependencies": {
-    "ngStorage": "latest",
+    "ngstorage": "latest",
     "angular": "latest",
     "angular-sanitize": "latest"
   }
