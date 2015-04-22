@@ -1,0 +1,15 @@
+.modal.fade
+	.modal-dialog
+		.modal-content
+			.modal-header
+				button(class="close" data-dismiss="modal" aria-label="Close")
+			.modal-title
+				.h4
+					|Settings
+			.modal-body
+				.div(contenteditable ng-bind-html="appSettings")
+			.modal-footer
+				button(class="btn btn-default" data-dismiss="modal")
+					| Close
+				button(class="btn btn-primary" ng-click="saveSettings()")
+					| Save changes

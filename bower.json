@@ -1,0 +1,21 @@
+{
+  "name": "restapidemo",
+  "version": "0.0.0",
+  "homepage": "https://github.com/smart2pay/restapidemo",
+  "authors": [
+    "Stefan Iancu <a1b2ff@yahoo.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ngStorage": "latest",
+    "angular": "latest",
+    "angular-sanitize": "latest"
+  }
+}
