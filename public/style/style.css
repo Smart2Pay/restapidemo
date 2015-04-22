@@ -34,6 +34,7 @@
 
 .jumbotronHeader .icons a{
 	margin-left: 0.5em;
+	color: black;
 }
 
 .title{
@@ -46,6 +47,7 @@
 	text-align: center;
 	cursor: pointer; cursor: hand;
 	float:right;
+	color: black;
 }
 
 .clearfix:after {
@@ -102,6 +104,35 @@
 	padding-bottom: 1em; 
 	padding-top: 1em; 
 
+}
+
+.control-label{
+	font-size:0.9em;
+	margin-bottom: 0.1em;
+	font-weight: normal;
+}
+
+.input{
+	margin-bottom: 1em;
+}
+
+::-webkit-input-placeholder { /* WebKit browsers */
+    color:    #DEDEDE;
+    font-weight: normal;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #DEDEDE;
+   opacity:  1;
+   font-weight: normal;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #DEDEDE;
+   opacity:  1;
+   font-weight: normal;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+   color:    #DEDEDE;
+   font-weight: normal;
 }
 
 .payButton{
@@ -164,6 +195,10 @@
 	min-height: 100%;
 	z-index: 1001;
 	display: none;
+}
+
+.modal-body{
+	min-height: 20em;
 }
 
 

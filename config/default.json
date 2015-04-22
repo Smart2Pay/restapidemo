@@ -3,29 +3,13 @@
 		"host" : "https://paytest.smart2pay.com/v1"
 	},
 	"testData" : {
-		"APIKEY" : "VWhsT0xtb0RGbzFaSEdWekx1N0hxNGhWUEhZY3VQUUg6",
+		"APIKEY" : "ak4t463bu8OivYr+nXp8Orb7VnMnd8xPWrBdakymEigrt1rhgD:",
 		"Payment": {
 		        "MerchantTransactionID": "1",
 		        "Amount": "0",
 		        "Currency": "EUR",
 		        "ReturnURL": "http://demo.smart2pay.com/redirect.php"
 		}
-		/*,
-		"Payment": {
-		        "MerchantTransactionID": "8888888877101",
-		        "Amount": "0",
-		        "Currency": "EUR",
-		        "ReturnURL": "http://demo.smart2pay.com/redirect.php",
-		        "Customer": {
-		            "FirstName": "John",
-		            "LastName": "Doe",
-		            "Email": "john@merchant.com"
-		        },
-		        "BillingAddress":{
-		            "Country": "nl"
-		        }
-		}
-*/		
 	},
 	"products" : 
 		[

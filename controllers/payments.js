@@ -14,6 +14,8 @@ exports.init = function(req,res){
 		var paymentRequest = config.get('testData')
 		var num = Math.ceil(Math.random()*10000000)
 		paymentRequest.Payment.MerchantTransactionID = num
+		paymentRequest.BasicAuth = new Buffer(paymentRequest.APIKEY).toString('base64')
+		
 		res.send(paymentRequest)
 	}
 
@@ -28,7 +30,7 @@ exports.methods = function(req,res){
      var options = {
 			 url: config.get('env.host') + '/methods?country='+req.query.country,
 	    	 headers: {
-	        	"Authorization": "Basic " + paymentRequest.APIKEY
+	        	"Authorization": "Basic " + new Buffer(paymentRequest.APIKEY).toString('base64')
 	    	}
 		}  	   
 	console.log(options)

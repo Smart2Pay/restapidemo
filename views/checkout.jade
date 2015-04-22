@@ -9,7 +9,7 @@ p.label
     #collapseOne.accordion-body.collapse.in
       .accordion-inner#products
         div(ng-repeat="product in products track by $index" )
-          input( type="checkbox" group="checkout" ng-click="updateShoppingCart()" ng-model="shoppingCart[$index]")
+          input(ng-cloack type="checkbox" group="checkout" ng-click="updateShoppingCart()" ng-model="shoppingCart[$index]")
           &nbsp; {{product.name}} ({{product.price}} {{product.currency}})  
   
 
@@ -19,22 +19,25 @@ p.label
         | Billing address
     #collapseTwo.accordion-body.collapse
       .accordion-inner
-        div.control-group
-          //label(for='country',class='control-label') Country [NL]
-          div.controls
-            input(type='text',name="country",id="country", ng-model="billingAddress.country", ng-model-options="{ updateOn: 'blur' }",ng-change="billingAddressChanged()",placeholder='Country',class='input')
-        div.control-group
-          //label(for='firstName',class='control-label') First Name
-          div.controls
-            input(type='text',ng-model="customer.firstName",ng-change="customerChanged()",placeholder='First Name',class='input')
-        div.control-group
-          //label(for='LastName',class='control-label') Last Name
-          div.controls
-            input(type='text',ng-model="customer.lastName",ng-change="customerChanged()",placeholder='Last Name',class='input')
-        div.control-group
-          //label(for='email',class='control-label') Email
-          div.controls
-            input(type='text',ng-model="customer.email",ng-change="customerChanged()",placeholder='Email',class='input' )
+          .col-sm-6.clearfix   
+              div.control-group
+                label(for='firstName',class='control-label') First Name
+                div.controls
+                  input(type='text',ng-model="customer.firstName",ng-change="customerChanged()",placeholder='Your first name',class='input')
+              div.control-group
+                label(for='LastName',class='control-label') Last Name
+                div.controls
+                  input(type='text',ng-model="customer.lastName",ng-change="customerChanged()",placeholder='Your last Name',class='input') 
+          .col-sm-6.clearfix     
+             
+              div.control-group
+                label(for='email',class='control-label') Email
+                div.controls
+                  input(type='text',ng-model="customer.email",ng-change="customerChanged()",placeholder='email@isp.com',class='input' )
+              div.control-group
+                label(for='country',class='control-label') Country
+                div.controls
+                  input(type='text',name="country",id="country", ng-model="billingAddress.country", ng-model-options="{ updateOn: 'blur' }",ng-change="billingAddressChanged()",placeholder='BR',class='input')
 
   .accordion-group
     .accordion-heading

@@ -12,11 +12,12 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter) {
 		
 		var req = {url: '/payments/init'}
 		$http(req).success(function(data) {
-	       $scope.requestHeader = data.APIKEY
-	       $scope.requestBody = JSON.stringify({Payment: data.Payment},null, "  ")
-	       console.log($scope.requestHeader)
-	       console.log($scope.requestBody)
-		   var reqInit = {url: '/payments/initCheckout'}
+			$scope.appSettings = JSON.stringify(data, null, "  ") //check if anything in local storage	
+	      	$scope.requestHeader = data.BasicAuth
+			$scope.requestBody = JSON.stringify({Payment: data.Payment},null, "  ")
+			console.log($scope.requestHeader)
+			console.log($scope.requestBody)
+			var reqInit = {url: '/payments/initCheckout'}
 		   $http(reqInit).success(function(dataInit) {
 		       $scope.products = dataInit;
 		       $scope.shoppingCart = []
