@@ -1,12 +1,18 @@
 var jade = require('jade')
 
-exports.index = function(ngController, ngAction, viewName){
-		return function(req, res){
+exports.index = function(req, res){
 			var renderIndex = jade.compileFile('./views/index.jade', 
 				{pretty: true})
-			var opts = {ngController: ngController, ngAction : ngAction, viewName: viewName}
-			var htmlIndex  =  renderIndex(opts)
+			var htmlIndex  =  renderIndex()
 			res.send(htmlIndex)
 		}
+
+exports.partials = function(req, res){
+		var viewname = req.params.viewname
+  		var renderIndex = jade.compileFile('./views/' + viewname + '.jade', 
+				{pretty: true})
+			var htmlIndex  =  renderIndex()
+			res.send(htmlIndex)
 	}
+
 

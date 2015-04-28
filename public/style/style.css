@@ -70,6 +70,7 @@
 
 .accordion-toggle{
 	color: grey;
+	cursor: pointer;
 }
 
 .accordion-toggle:visited{

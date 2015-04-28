@@ -1,4 +1,15 @@
-angular.module('paymentsApp').directive('contenteditable', function() {
+angular.module('paymentsApp')
+.directive('checkout', function(){
+  return {
+    restrict: 'E',
+    templateUrl: '/checkout',
+    link: function(scope, elements, attrs){
+
+    }
+  }
+})
+
+.directive('contenteditable', function() {
     return {
       restrict: 'A',
       require: '?ngModel',

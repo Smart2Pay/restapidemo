@@ -16,6 +16,7 @@
   "dependencies": {
     "ngstorage": "latest",
     "angular": "latest",
-    "angular-sanitize": "latest"
+    "angular-sanitize": "latest",
+    "angular-route": "latest"
   }
 }

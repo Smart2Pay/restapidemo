@@ -1,51 +1,52 @@
-var paymentsApp = angular.module('paymentsApp', ['ngSanitize', 'ngStorage']);
-
-
 paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localStorage) {
 	
 	angular.element(document).ready(function () {
+		delete $localStorage.appSettings
+		//alert($localStorage.appSettings)
         $scope.init()
     });
 
 	$scope.applySettings = function(){
-		$scope.requestHeader = window.btoa(JSON.parse($filter('cleanJson')($scope.appSettings)).APIKEY)
 		$localStorage.appSettings = $filter('cleanJson')($scope.appSettings)
+		$('#appSettingsDialog').modal('hide')
+		$scope.init()
+		
 	}
 
 
 	$scope.init = function(){
-		var req = {url: '/payments/init'}
-		$http(req).success(function(data) {
-			if($localStorage.appSettings){
-				$scope.appSettings = $localStorage.appSettings //check if anything in local storage	
-			}
-			else{
-				$scope.appSettings = JSON.stringify(data, null, "  ")
-			}
-	      	$scope.requestHeader = window.btoa(JSON.parse($filter('cleanJson')($scope.appSettings)).APIKEY)
-			$scope.requestBody = JSON.stringify({Payment: data.Payment},null, "  ")
-			console.log($scope.requestHeader)
-			console.log($scope.requestBody)
-			var reqInit = {url: '/payments/initCheckout'}
-		   $http(reqInit).success(function(dataInit) {
-		       $scope.products = dataInit;
-		       $scope.shoppingCart = []
-		       $scope.customer = null;
-		       $scope.billingAddress = null;
-		       $scope.shoppingCart[0] = true;
-		       for(var $i=1;$i<$scope.products.length;$i++){
-		       		$scope.shoppingCart[$i] = false
-		       }
-		       console.log($scope.products)
-		       $scope.updateShoppingCart()
+		if($localStorage.appSettings){ //check if anything in local storage, if so load from there
+			$scope.appSettings = JSON.parse($localStorage.appSettings)
+			console.log($scope.appSettings)
+			populateFields($scope.appSettings)
+		}
+		else{
+			var req = {url: '/payments/init'}
+			$http(req).success(function(appSettings) {
+				$scope.appSettings = appSettings
+				console.log(appSettings)
+				populateFields(appSettings)			
+			})
+		}
+	}
 
-		       $scope.methods = null
-		       $scope.paymentMethod = null
-		       $scope.tempMessage = "Please choose your country first..."
-		    });   
-	    });	
-
-	    	
+	function populateFields(appSettings){
+		var num = Math.ceil(Math.random()*10000000)
+		appSettings.Payment.MerchantTransactionID = num
+      	$scope.requestHeader = window.btoa(appSettings.APIKEY)
+		$scope.requestBody = JSON.stringify({Payment: appSettings.Payment},null, "  ")
+		$scope.products = appSettings.products;	
+		$scope.shoppingCart = []
+		$scope.customer = null;
+		$scope.billingAddress = null;
+		$scope.shoppingCart[0] = true;
+		for(var $i=1;$i<$scope.products.length;$i++){
+				$scope.shoppingCart[$i] = false
+		}
+		$scope.updateShoppingCart()
+		$scope.methods = null
+		$scope.paymentMethod = null
+		$scope.tempMessage = "Please choose your country first..."
 	}
 
 	$scope.updateShoppingCart = function(){
@@ -60,6 +61,19 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
 		})
 		$scope.requestBody = JSON.stringify(payment, null, "  ")
 		
+	}
+
+	$scope.referenceNumberChanged = function(){
+		var payment = JSON.parse($scope.requestBody)
+		if($scope.referenceNumber){
+			payment.Payment.Details = {}
+			payment.Payment.Details.ReferenceNumber = $scope.referenceNumber
+
+		}
+		else{
+			delete payment.Payment.Details	
+		}
+		$scope.requestBody = JSON.stringify(payment, null, "  ")
 	}
 
 	$scope.billingAddressChanged = function(){
@@ -170,18 +184,20 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
 		//console.log('starting post2')
 
 		$('.wait').show()
-
 		$http(req)
 				.success(function(data) {
-					console.log(data.headers)
+					//console.log(data.headers)
 					$scope.responseBody = data.body
 					$scope.responseStatusCode = data.statusCode
 					$scope.responseHeader = JSON.stringify(data.headers, null, "  ")
-			
-					console.log($scope.responseBody)
+					//console.log($scope.responseBody)
 					$('.wait').hide()
-					//$scope.responseHeader = data.header
-						
+					console.log(data.body)
+					var payment = JSON.parse($filter('cleanJson')(data.body))
+					if(payment && payment.RedirectURL && config.get('appSettings').autoRedirect){
+						window.location = payment.RedirectURL
+					}
+
 				})
 	}
 })

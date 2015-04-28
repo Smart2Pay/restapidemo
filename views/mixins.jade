@@ -1,35 +1,3 @@
-mixin header(title, ngController)
-    doctype
-    html(ng-app="paymentsApp")
-        head
-                meta(charset="utf-8")
-                meta(name="viewport" content="width=device-width, initial-scale=1")
-                block title
-                    title=title
-                link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css")
-                link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css")
-                link(rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css")
-                link(rel="stylesheet", href="/style/style.css")
-
-                
-            body(ng-controller=ngController)
-            include menu
-
-
-mixin footer()
-    script(src="/scripts/bower-dist/angular.min.js")
-    script(src="/scripts/bower-dist/angular-sanitize.min.js")
-    script(src="/scripts/bower-dist/angular-cookies.min.js")
-    script(src="/scripts/bower-dist/ngStorage.min.js")
-    script(src="/scripts/frontController.js")
-    script(src="/scripts/directives.js")
-    script(src="/scripts/filters.js")
-    script(src="/scripts/utils.js")
-    script(src="/scripts/ui.js")
-    script(src="https://code.jquery.com/jquery-2.1.3.min.js")
-    script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js")
-    </body>
-
 //- Navbar mixins
 mixin nav(name, id, style)
     - var style = (typeof style === 'undefined') ? "default" : style
@@ -46,8 +14,8 @@ mixin nav(name, id, style)
             ul.nav.navbar-nav
                 block
  
-mixin nav_item(ngClickAction, active)
-    li(class=active): a( ng-click=ngClickAction)
+mixin nav_item(active)
+    li(class=active): a()
         block
  
 mixin nav_item_dropdown(ngController, active)    
@@ -65,7 +33,4 @@ mixin nav_header
         block
  
 //- End navbar mixins
-
-
-mixin wait
-    .wait
+    

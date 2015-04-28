@@ -1,41 +1,4 @@
-include mixins
-
--var ctrl = ngController
-
-+header("REST API DEMO", ctrl)
-
-block content
-	.container
-		.jumbotron
-			.jumbotronHeader.clearfix
-					.title
-							=viewName
-					.icons
-						a(ng-click="init()")
-							i.fa.fa-refresh
-						a(onclick="toggleTech()")
-							i.fa.fa-indent
-						a(onclick="$('.modal.fade').modal('show') ")
-							i.fa.fa-gears
-			.contentWrapper#payments
-				.row
-					.col-md-5.clearfix#business
-							include checkout
-					.col-md-7#tech
-						p.label Authorization
-							.editable.header(name="requestHeader" ng-model="requestHeader" ng-bind-html="requestHeader | limitTo:100")
-						p.label Body
-							.editable.response(name="requestBody" ng-model="requestBody" ng-bind-html="requestBody | formatText" contenteditable)
-						p.label Response Status Code
-							.editable.header(name="responseStatusCode" ng-model="responseStatusCode" ng-bind-html="responseStatusCode") 
-						p.label Response Headers
-							.editable.header(name="responseHeader" ng-model="responseHeader" ng-bind-html="responseHeader")
-						p.label Response Body
-							.editable.response(name="responseBody" ng-model="responseBody" ng-bind-html="responseBody | formatText")
-			include modal
-
-
-block footer
-	+wait()
-	+footer()
-
+extends layout
+block body
+	.jumbotron
+		div(ng-view)

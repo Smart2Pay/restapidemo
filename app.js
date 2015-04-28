@@ -20,12 +20,13 @@ var logger = mylogger()
 
 //setup view engine
 app.set('view engine', 'jade')
-app.set('views', __dirname + '/views');
+app.set('views', __dirname + '/views')
 
 
 // bootstrap routes
-require('./config/routes')(app, passport);
-app.use(express.static('public'));
+require('./config/routes')(app, passport)
+app.use(express.static('public'))
+
 
 // start app server
 var server = app.listen(process.env.port || 3000, function(){

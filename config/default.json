@@ -1,36 +1,34 @@
 {
-	"env" : {
-		"host" : "https://paytest.smart2pay.com/v1"
-	},
-	"testData" : {
+	"appSettings" : {
+		"host" : "https://paytest.smart2pay.com/v1",
 		"APIKEY" : "ak4t463bu8OivYr+nXp8Orb7VnMnd8xPWrBdakymEigrt1rhgD:",
+		"autoRedirect" : true,
 		"Payment": {
 		        "MerchantTransactionID": "1",
 		        "Amount": "0",
 		        "Currency": "EUR",
 		        "ReturnURL": "http://demo.smart2pay.com/redirect.php"
-		}
-	},
-	"products" : 
+		},
+		"products" : 
 		[
 			{
-				"name" : "Basket ball",
-				"price": 6500,
+				"name" : "Package 1",
+				"price": 500,
 				"currency": "EUR",
 				"icon" : "products/ball_basketball_icon.jpg"
 			},
 			{
-				"name" : "Tennis ball",
-				"price": 500,
+				"name" : "Package 2",
+				"price": 850,
 				"currency": "EUR",
 				"icon" : "products/ball_tennis_icon.jpg"
 			},
 			{
-				"name" : "Football",
-				"price": 2500,
+				"name" : "Package 3",
+				"price": 1500,
 				"currency": "EUR",
 				"icon" : "products/ball_football_icon.jpg"
 			}
 		]
-	
+	}
 }

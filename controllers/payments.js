@@ -10,25 +10,15 @@ var config = require('config');
 process.env['ALLOW_CONFIG_MUTATIONS'] = true //needed to change MerchantTransactionID (!!!)
 
 
-exports.init = function(req,res){
-		var paymentRequest = config.get('testData')
-		var num = Math.ceil(Math.random()*10000000)
-		paymentRequest.Payment.MerchantTransactionID = num
-		//paymentRequest.BasicAuth = new Buffer(paymentRequest.APIKEY).toString('base64')
-		
-		res.send(paymentRequest)
+exports.appSettings = function(req,res){
+		var appSettings = config.get('appSettings')
+		res.send(appSettings)
 	}
-
-exports.initCheckout = function(req,res){
-		var products = config.get('products')
-		res.send(products)
-	}
-
 
 exports.methods = function(req,res){
-	 var paymentRequest = config.get('testData')
+	 var paymentRequest = config.get('appSettings')
      var options = {
-			 url: config.get('env.host') + '/methods?country='+req.query.country,
+			 url: config.get('appSettings.host') + '/methods?country='+req.query.country,
 	    	 headers: {
 	        	"Authorization": "Basic " + new Buffer(paymentRequest.APIKEY).toString('base64')
 	    	}
@@ -57,7 +47,7 @@ exports.post = function(req, res){
     req.on('end', function () { 
         //console.log(body['headers'])
 		 var options = {
-			 url: config.get('env.host') + '/payments',
+			 url: config.get('appSettings.host') + '/payments',
 	    	 headers: {
 	        	"Authorization": "Basic " + message['headers']
 	    	},
@@ -93,7 +83,7 @@ exports.get = function(req, res){
 	logger.info('APIKEY:' + config.util.getEnv('APIKEY'))
 
 	var options = {
-		 url: config.get('env.host') + '/payments',
+		 url: config.get('appSettings.host') + '/payments',
     	 headers: {
         	'Authorization': 'Basic '+ config.util.getEnv('APIKEY')
     	}

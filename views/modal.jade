@@ -1,5 +1,5 @@
 .modal.fade
-	.modal-dialog
+	#appSettingsDialog.modal-dialog
 		.modal-content
 			.modal-header
 				button(class="close" data-dismiss="modal" aria-label="Close")
@@ -7,7 +7,7 @@
 				.h4
 					|Settings
 			.modal-body
-				.div(contenteditable ng-bind-html="appSettings | formatText" ng-model="appSettings")
+				.div(contenteditable ng-bind-html="appSettings | json | formatText" ng-model="appSettings")
 			.modal-footer
 				button(class="btn btn-default" data-dismiss="modal")
 					| Close

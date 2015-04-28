@@ -4,7 +4,7 @@ p.label
 
   .accordion-group
     .accordion-heading
-      a(class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne")
+      a(class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" data-target="#collapseOne")
         | Add item to cart
     #collapseOne.accordion-body.collapse.in
       .accordion-inner#products
@@ -15,8 +15,8 @@ p.label
 
   .accordion-group
     .accordion-heading
-      a(class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo")
-        | Billing address
+      a(class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" data-target="#collapseTwo")
+        | Billing details
     #collapseTwo.accordion-body.collapse
       .accordion-inner
           .col-sm-6.clearfix   
@@ -38,10 +38,17 @@ p.label
                 label(for='country',class='control-label') Country
                 div.controls
                   input(type='text',name="country",id="country", ng-model="billingAddress.country", ng-model-options="{ updateOn: 'blur' }",ng-change="billingAddressChanged()",placeholder='BR',class='input')
+          .col-sm-12.clearfix     
+             
+              div.control-group
+                label(for='refno',class='control-label') Reference Number
+                div.controls
+                  input(type='text',ng-model="referenceNumber",placeholder='PROD87621',class='input', ng-change="referenceNumberChanged()")
+             
 
   .accordion-group
     .accordion-heading
-      a(class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree")
+      a(class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" data-target="#collapseThree")
         | Choose payment method
     #collapseThree.accordion-body.collapse
       .accordion-inner
