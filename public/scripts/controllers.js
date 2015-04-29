@@ -13,14 +13,29 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
 		
 	}
 
+	$scope.restoreSettings = function(){
+		var answer = confirm("Are you sure you want to reset settings to default?");
+		if(answer){
+			delete $localStorage.appSettings
+			//alert($localStorage.appSettings)
+	        $scope.init()
+	    }
+		
+	}
+
 
 	$scope.init = function(){
+		$scope.responseBody = null
+		$scope.responseHeader = null
+		$scope.responseStatusCode = null
+
 		if($localStorage.appSettings){ //check if anything in local storage, if so load from there
 			$scope.appSettings = JSON.parse($localStorage.appSettings)
-			console.log($scope.appSettings)
+			console.log("load from localStorage: " + $scope.appSettings)
 			populateFields($scope.appSettings)
 		}
 		else{
+			console.log("load from defaults")
 			var req = {url: '/payments/init'}
 			$http(req).success(function(appSettings) {
 				$scope.appSettings = appSettings
@@ -37,6 +52,7 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
 		$scope.requestBody = JSON.stringify({Payment: appSettings.Payment},null, "  ")
 		$scope.products = appSettings.products;	
 		$scope.shoppingCart = []
+		$scope.referenceNumber = null;
 		$scope.customer = null;
 		$scope.billingAddress = null;
 		$scope.shoppingCart[0] = true;

@@ -22,7 +22,6 @@ paymentsApp.filter('cleanJson', function (){
       .replace(/ /g, '')
       .replace(/(\\) /g, '')
       .replace(/&nbsp;/g, '')
-
       return output;
   };
 });
