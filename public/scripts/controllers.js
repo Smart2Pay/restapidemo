@@ -1,12 +1,15 @@
 paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localStorage) {
 	
 	angular.element(document).ready(function () {
-        $scope.init()
+        //$scope.init()
     });
 
+	$scope.$on('$viewContentLoaded', function() {$scope.init()});
+
 	$scope.applySettings = function(){
-		$localStorage.appSettings = $filter('cleanJson')($scope.appSettings)
-		$('#appSettingsDialog').modal('hide')
+		alert(JSON.stringify($filter('cleanJson')($scope.appSettings)))
+		$localStorage.appSettings = JSON.stringify($filter('cleanJson')($scope.appSettings))
+		//$('#appSettingsDialog').modal('hide').data( 'modal', null );
 		$scope.init()
 		
 	}
@@ -25,24 +28,35 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
 		$scope.responseBody = null
 		$scope.responseHeader = null
 		$scope.responseStatusCode = null
+		var parsedAppSettings = null
+		try{
 
-		if($localStorage.appSettings){ //check if anything in local storage, if so load from there
-			$scope.appSettings = JSON.parse($localStorage.appSettings)
-			console.log("load from localStorage: " + $scope.appSettings)
+			parsedAppSettings = JSON.parse($localStorage.appSettings)
+			console.log(parsedAppSettings)
+		}
+		catch(e){
+			console.log("Could not load from local storage")
+		}
+		if(parsedAppSettings){ //check if anything in local storage, if so load from there
+			$scope.appSettings = parsedAppSettings
+			console.log("load from localStorage")
+			//console.log($scope.appSettings)
 			populateFields($scope.appSettings)
 		}
 		else{
 			console.log("load from defaults")
-			var req = {url: '/payments/init'}
+			var req = {url: '/payments/appSettings'}
 			$http(req).success(function(appSettings) {
 				$scope.appSettings = appSettings
-				console.log(appSettings)
-				populateFields(appSettings)			
+				//console.log($scope.appSettings)
+				populateFields($scope.appSettings)			
 			})
 		}
+		
 	}
 
 	function populateFields(appSettings){
+		console.log(appSettings)
 		var num = Math.ceil(Math.random()*10000000)
 		appSettings.Payment.MerchantTransactionID = num
       	$scope.requestHeader = window.btoa(appSettings.APIKEY)
@@ -191,7 +205,7 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
 			method : 'post',
 			data : {
 				headers: $scope.requestHeader,
-				body: $filter('cleanJson')($scope.requestBody)
+				body: JSON.stringify($filter('cleanJson')($scope.requestBody))
 			}
 		}
 		//console.log('starting post2')

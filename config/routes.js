@@ -7,7 +7,7 @@ module.exports = function (app, passport) {
 	
 	app.post('/payments', paymentsController.post)	
 	app.get('/payments/methods', paymentsController.methods)
-	app.get('/payments/init', paymentsController.appSettings)
+	app.get('/payments/appSettings', paymentsController.appSettings)
 	
 	
 }

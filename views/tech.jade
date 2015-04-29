@@ -1,10 +1,10 @@
 p.label Authorization
 	.editable.header(name="requestHeader" ng-model="requestHeader" ng-bind-html="requestHeader | limitTo:100")
 p.label Body
-	.editable.response(name="requestBody" ng-model="requestBody" ng-bind-html="requestBody | formatText" contenteditable)
+	.editable.response(name="requestBody" ng-model="requestBody" ng-bind-html="requestBody | formatJson" contenteditable)
 p.label Response Status Code
 	.editable.header(name="responseStatusCode" ng-model="responseStatusCode" ng-bind-html="responseStatusCode") 
 p.label Response Headers
 	.editable.header(name="responseHeader" ng-model="responseHeader" ng-bind-html="responseHeader")
 p.label Response Body
-	.editable.response(name="responseBody" ng-model="responseBody" ng-bind-html="responseBody | formatText")
+	.editable.response(name="responseBody" ng-model="responseBody" ng-bind-html="responseBody | formatJson")

@@ -7,7 +7,7 @@
 				.h4
 					|Settings
 			.modal-body
-				.div(contenteditable="true" ng-bind-html="appSettings | json | formatText" ng-model="appSettings")
+				.div(contenteditable="true" ng-bind-html="appSettings | json | formatJson" ng-model="appSettings")
 			.modal-footer
 				button(class="btn btn-danger" ng-click="restoreSettings()")
 					| Restore settings

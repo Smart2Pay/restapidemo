@@ -54,7 +54,7 @@ p.label
       .accordion-inner
         div(ng-repeat="method in methods.Methods" )
           input( type="radio" name="methodsRadio" ng-click="paymentMethodChanged()" ng-model="$parent.paymentMethod" value="{{method.ID}}") 
-          img(src= "https://apitest.smart2pay.com/{{method.LogoURL}}")
+          img(ng-src= "https://apitest.smart2pay.com/{{method.LogoURL}}")
         div(ng-model="tempMessage")
           {{tempMessage}}
         

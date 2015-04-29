@@ -1,4 +1,4 @@
-paymentsApp.filter('formatText', function (){
+paymentsApp.filter('formatJson', function (){
   return function(input) {
     if(!input) return input;
     var output = input
@@ -15,13 +15,14 @@ paymentsApp.filter('formatText', function (){
 
 paymentsApp.filter('cleanJson', function (){
   return function(input) {
-    if(!input) return input;
+    if(!input) return input
+    if(typeof input == 'object') return input
     var output = input
       .replace(/(<br>)/g, '')
       .replace(/(<br\/>)/g, '')
       .replace(/ /g, '')
-      .replace(/(\\) /g, '')
+      .replace(/(\\)/g, '')
       .replace(/&nbsp;/g, '')
-      return output;
+      return JSON.parse(output);
   };
 });
