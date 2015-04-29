@@ -1,8 +1,6 @@
 paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localStorage) {
 	
 	angular.element(document).ready(function () {
-		delete $localStorage.appSettings
-		//alert($localStorage.appSettings)
         $scope.init()
     });
 
@@ -17,7 +15,6 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
 		var answer = confirm("Are you sure you want to reset settings to default?");
 		if(answer){
 			delete $localStorage.appSettings
-			//alert($localStorage.appSettings)
 	        $scope.init()
 	    }
 		
