@@ -3,14 +3,19 @@ var paymentsApp = angular.module('paymentsApp', ['ngSanitize', 'ngStorage','ngRo
 paymentsApp.config(['$routeProvider', 
 	function($routeProvider){
 		$routeProvider
+	      .when('/payments/get',{
+	      	templateUrl: 'partials/payments-get',
+	        controller: 'paymentsCtrl'
+	      })
 	      .when('/payments', {
 	        templateUrl: 'partials/payments-post',
 	        controller: 'paymentsCtrl'
 	      })
+	      /*
 	      .otherwise(
 	      {
 	      	redirectTo: '/payments'
-	      })
+	      })*/
   	}
 ])
 

@@ -220,13 +220,23 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
 					//console.log($scope.responseBody)
 					$('.wait').hide()
 					console.log(data.body)
-					var payment = JSON.parse($filter('cleanJson')(data.body))
-					if(payment && payment.RedirectURL && config.get('appSettings').autoRedirect){
+					var payment = $filter('cleanJson')(data.body)
+					if(payment && payment.RedirectURL && $scope.appSettings.autoRedirect){
+						console.log(payment.RedirectURL)
 						window.location = payment.RedirectURL
 					}
 
 				})
 	}
 })
+.controller('paymentsGetCtrl',  function($scope, $http, $filter, $localStorage) {
+	
+	$scope.init = function(){
+		alert(1)	
+	}
+	
+	$scope.$on('$viewContentLoaded', function() {$scope.init()});
 
+	
+})
 
