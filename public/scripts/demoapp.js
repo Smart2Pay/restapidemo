@@ -1,4 +1,4 @@
-var paymentsApp = angular.module('paymentsApp', ['ngSanitize', 'ngStorage','ngRoute'])
+var paymentsApp = angular.module('paymentsApp', ['ngSanitize', 'ngStorage','ngRoute','ui.grid'])
 
 paymentsApp.config(['$routeProvider', '$locationProvider', 
 	function($routeProvider, $locationProvider){

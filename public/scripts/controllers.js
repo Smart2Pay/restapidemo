@@ -272,9 +272,52 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
       	$scope.requestDefinition = 'GET ' + appSettings.host + '/payments/'
       	$scope.requestHeader = window.btoa(appSettings.APIKEY)
 		$scope.requestBody = null
-	}
 
-	
+		//we also run already the command
+		//
+		var req = {
+			url : 'payments/get',
+			method : 'post',
+			data : {
+				headers: $scope.requestHeader,
+			}
+		}
+		//console.log('starting post2')
+
+		$('.wait').show()
+		$http(req)
+				.success(function(data) {
+					//console.log(data.headers)
+					$scope.responseBody = data.body.info.body
+					$scope.responseStatusCode = data.statusCode
+					$scope.responseHeader = JSON.stringify(data.headers, null, "  ")
+					//console.log($scope.responseBody)
+					$('.wait').hide()
+					console.log(data.body)
+					responseArray = JSON.parse($scope.responseBody)
+					$scope.myData = []
+					responseArray.Payments.forEach(function(item){
+
+						$scope.myData.push(
+							{
+								'ID' : item.ID,
+								'MerchantTransactionID' : item.MerchantTransactionID,
+								'Amount' : item.Amount,
+								'CCY' : item.Currency,
+								'MethodID' : item.MethodID
+
+							}
+
+						)
+					})
+
+					//TODO: parse response
+					
+				})
+
+		
+
+	}
 	$scope.$on('reload', function() {$scope.init()});
 
 

@@ -1,4 +1,7 @@
-
+.myGrid {
+    width: 400px;
+    height: 450px;
+  }
 
 .title{
 	text-weight: bold;
@@ -244,3 +247,5 @@
 		max-height: 2em;
 }
 }
+
+

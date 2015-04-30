@@ -77,39 +77,46 @@ exports.post = function(req, res){
 }
 
 exports.get = function(req, res){
+	var message = {}
+    req.on('data', function (data) {
+    	
+        message = JSON.parse(data);       
+    	if (message.length > 1e6)
+            req.connection.destroy()
 
-	var renderPayments = jade.compileFile('./views/payments.jade', {pretty: true})
+    })
+    req.on('end', function () { 
+		 var options = {
+			 url: config.get('appSettings.host') + '/payments',
+	    	 headers: {
+	        	"Authorization": "Basic " + message['headers']
+	    	}
+	    }
 
-	logger.info('APIKEY:' + config.util.getEnv('APIKEY'))
-
-	var options = {
-		 url: config.get('appSettings.host') + '/payments',
-    	 headers: {
-        	'Authorization': 'Basic '+ config.util.getEnv('APIKEY')
-    	}
-	}
-
-	logger.info(options)
-
-	request.get(options, function (error, response, body) {				  
-		  
-		  var parsedBody = null
-		  if (!error && response.statusCode > 200 && response.code < 300) {
-		  	
-		    logger.info(body)
-		    parsedBody = contentParse(body)
-		  }
-		  else{
-		  	logger.error(response.statusCode)
-		  	parsedBody = ''
-		  }
-		  
-		  var info = {info: {body : parsedBody}}
-		  var htmlPayments  =  renderPayments(info)
-		  res.send(htmlPayments)
-		
+		logger.info(options)
+		request.get(options, function (error, response, body) {				  
+			  var data = {}
+			  var parsedBody = null
+			  if (!error && response.statusCode >= 200 && response.statusCode < 300) {
+			    //logger.info(body)
+			    parsedBody = body
+			  }
+			  else{
+			  	logger.error(response.statusCode + error)
+			  	parsedBody = ''
+			  }
+			  data.headers = response.headers
+			  data.statusCode = response.statusCode
+			  var info = {info: {body : parsedBody}}
+			  data.body = info
+			  console.log(data)
+			  res.send(JSON.stringify(data))
+			
 		})
+		
+	})
 }
+
 
 function contentParse(content){
     content = content.replace(/\n?\r\n/g, '<br/>' ).replace(/"/g, '\'').replace(/ /g, '&nbsp;')
