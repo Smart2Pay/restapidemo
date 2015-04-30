@@ -1,0 +1,20 @@
+block content
+	.container(ng-controller="paymentsGetCtrl")
+		.jumbotron
+			.jumbotronHeader.clearfix
+					.title
+						| Dashboard
+					.icons
+						a(ng-click="init()")
+							i.fa.fa-refresh
+						a(onclick="toggleTech()")
+							i.fa.fa-indent
+						a(onclick="$('.modal.fade').modal('show') ")
+							i.fa.fa-gears
+			.contentWrapper#payments
+				.row
+					.col-md-5.clearfix#business
+							include dashboard
+					.col-md-7#tech
+							include tech
+			include modal
