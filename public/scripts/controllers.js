@@ -297,26 +297,19 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
 					responseArray = JSON.parse($scope.responseBody)
 					$scope.myData = []
 					responseArray.Payments.forEach(function(item){
-
 						$scope.myData.push(
 							{
 								'ID' : item.ID,
 								'MerchantTransactionID' : item.MerchantTransactionID,
 								'Amount' : item.Amount,
 								'CCY' : item.Currency,
+								'Status' : item.Status.Info,
 								'MethodID' : item.MethodID
-
 							}
-
 						)
 					})
-
 					//TODO: parse response
-					
 				})
-
-		
-
 	}
 	$scope.$on('reload', function() {$scope.init()});
 
