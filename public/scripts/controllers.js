@@ -4,7 +4,7 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
         //$scope.init()
     });
 
-	$scope.$on('$viewContentLoaded', function() {$scope.init()});
+	$scope.$on('reload', function() {$scope.init()});
 
 	$scope.applySettings = function(){
 		alert(JSON.stringify($filter('cleanJson')($scope.appSettings)))
@@ -25,6 +25,7 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
 
 
 	$scope.init = function(){
+		$scope.requestDefinition = null
 		$scope.responseBody = null
 		$scope.responseHeader = null
 		$scope.responseStatusCode = null
@@ -59,6 +60,7 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
 		console.log(appSettings)
 		var num = Math.ceil(Math.random()*10000000)
 		appSettings.Payment.MerchantTransactionID = num
+      	$scope.requestDefinition = 'POST ' + appSettings.host + '/payments/'
       	$scope.requestHeader = window.btoa(appSettings.APIKEY)
 		$scope.requestBody = JSON.stringify({Payment: appSettings.Payment},null, "  ")
 		$scope.products = appSettings.products;	
@@ -230,13 +232,58 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
 	}
 })
 .controller('paymentsGetCtrl',  function($scope, $http, $filter, $localStorage) {
-	
+	angular.element(document).ready(function () {
+        //$scope.init()
+    });
+
 	$scope.init = function(){
-		alert(1)	
+		$scope.requestDefinition = null
+		$scope.responseBody = null
+		$scope.responseHeader = null
+		$scope.responseStatusCode = null
+		var parsedAppSettings = null
+		try{
+
+			parsedAppSettings = JSON.parse($localStorage.appSettings)
+			console.log(parsedAppSettings)
+		}
+		catch(e){
+			console.log("Could not load from local storage")
+		}
+		if(parsedAppSettings){ //check if anything in local storage, if so load from there
+			$scope.appSettings = parsedAppSettings
+			console.log("load from localStorage")
+			//console.log($scope.appSettings)
+			populateFields($scope.appSettings)
+		}
+		else{
+			console.log("load from defaults")
+			var req = {url: '/payments/appSettings'}
+			$http(req).success(function(appSettings) {
+				$scope.appSettings = appSettings
+				//console.log($scope.appSettings)
+				populateFields($scope.appSettings)			
+			})
+		}
+		
 	}
-	
-	$scope.$on('$viewContentLoaded', function() {$scope.init()});
+
+	function populateFields(appSettings){
+      	$scope.requestDefinition = 'GET ' + appSettings.host + '/payments/'
+      	$scope.requestHeader = window.btoa(appSettings.APIKEY)
+		$scope.requestBody = null
+	}
 
 	
+	$scope.$on('reload', function() {$scope.init()});
+
+
+	
+})
+.controller('genericCtrl',  function($scope, $http, $filter, $localStorage) {
+	$scope.$on('$viewContentLoaded', 
+		function() {
+			$scope.$broadcast('reload', null)
+		})
 })
 

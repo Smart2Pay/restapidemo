@@ -1,7 +1,7 @@
-var paymentsApp = angular.module('paymentsApp', ['ngSanitize', 'ngStorage','ngRoute']);
+var paymentsApp = angular.module('paymentsApp', ['ngSanitize', 'ngStorage','ngRoute'])
 
-paymentsApp.config(['$routeProvider', 
-	function($routeProvider){
+paymentsApp.config(['$routeProvider', '$locationProvider', 
+	function($routeProvider, $locationProvider){
 		$routeProvider
 	      .when('/payments/get',{
 	      	templateUrl: 'partials/payments-get',
@@ -11,11 +11,12 @@ paymentsApp.config(['$routeProvider',
 	        templateUrl: 'partials/payments-post',
 	        controller: 'paymentsCtrl'
 	      })
-	      /*
 	      .otherwise(
 	      {
 	      	redirectTo: '/payments'
-	      })*/
+	      })
+  	
+  		//$locationProvider.html5Mode(true)
   	}
 ])
 
