@@ -3,7 +3,7 @@ p.label Definition
 p.label Authorization
 	.editable.header(name="requestHeader" ng-model="requestHeader" ng-bind-html="requestHeader | limitTo:100")
 p.label Body
-	.editable.response(name="requestBody" ng-model="requestBody" ng-bind-html="requestBody | formatJson" contenteditable)
+	.editable.response(name="requestBody" ng-model="requestBody" ng-bind-html="requestBody | formatJson" contenteditable="true")
 p.label Response Status Code
 	.editable.header(name="responseStatusCode" ng-model="responseStatusCode" ng-bind-html="responseStatusCode") 
 p.label Response Headers

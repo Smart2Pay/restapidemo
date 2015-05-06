@@ -27,3 +27,16 @@ paymentsApp.filter('cleanJson', function (){
       return JSON.parse(output);
   };
 });
+
+paymentsApp.filter('cleanHtml', function (){
+  return function(input) {
+    if(!input) return input
+    console.log('input:' + input)
+    if(typeof input == 'object') return input
+    var output = input
+      .replace(/(<br>)/g, '')
+      .replace(/(<br\/>)/g, '')
+      console.log('output:' + output)
+      return output;
+  };
+});

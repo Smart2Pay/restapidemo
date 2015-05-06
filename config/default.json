@@ -2,7 +2,7 @@
 	"appSettings" : {
 		"host" : "https://paytest.smart2pay.com/v1",
 		"APIKEY" : "ak4t463bu8OivYr+nXp8Orb7VnMnd8xPWrBdakymEigrt1rhgD:",
-		"autoRedirect" : true,
+		"autoRedirect" : true, 
 		"Payment": {
 		        "MerchantTransactionID": "1",
 		        "Amount": "0",

@@ -1,1 +1,5 @@
 .myGrid(ui-grid="{ data: myData }" ui-grid-resize-columns)
+
+p.label Get info on Transaction ID
+	.editable.header(name="getTrxIdInfo" ng-model="requestTrxId" ng-bind-html="requestTrxId | cleanHtml" contenteditable="true"
+		ng-model-options="{ updateOn: 'blur' }" ng-change="getTrxIdInfoChanged()")

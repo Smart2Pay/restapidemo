@@ -241,6 +241,7 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
 		$scope.responseBody = null
 		$scope.responseHeader = null
 		$scope.responseStatusCode = null
+		$scope.requestTrxId = null
 		var parsedAppSettings = null
 		try{
 
@@ -266,6 +267,38 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
 			})
 		}
 		
+	}
+
+	$scope.getTrxIdInfoChanged = function(){
+		$scope.requestTrxId = $filter('cleanHtml')($scope.requestTrxId)
+
+		if(!$scope.requestTrxId || $scope.requestTrxId.length == 0){
+			$scope.init()
+			return
+		}
+		$scope.requestDefinition = 'GET ' + $scope.appSettings.host + '/payments/' + $scope.requestTrxId
+
+		var req = {
+			url : 'payments/get/'+$scope.requestTrxId,
+			method : 'post',
+			data : {
+				headers: $scope.requestHeader,
+			}
+		}
+		//console.log('starting post2')
+
+		$('.wait').show()
+		$http(req)
+				.success(function(data) {
+					//console.log(data.headers)
+					$scope.responseBody = data.body.info.body
+					$scope.responseStatusCode = data.statusCode
+					$scope.responseHeader = JSON.stringify(data.headers, null, "  ")
+					//console.log($scope.responseBody)
+					$('.wait').hide()
+					console.log(data.body)
+				})
+
 	}
 
 	function populateFields(appSettings){

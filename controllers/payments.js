@@ -76,6 +76,48 @@ exports.post = function(req, res){
 	})
 }
 
+exports.getTrxId = function(req, res){
+	var message = {}
+	req.on('data', function (data) {
+        message = JSON.parse(data); 
+           
+    	if (message.length > 1e6)
+            req.connection.destroy()
+
+    })
+    req.on('end', function () { 
+    	 console.log(req.params.id)  
+		 var options = {
+			 url: config.get('appSettings.host') + '/payments/' + req.params.id,
+	    	 headers: {
+	        	"Authorization": "Basic " + message['headers']
+	    	}
+	    }
+	    console.log(options)
+	    request.get(options, function (error, response, body) {		
+			var data = {}
+			var parsedBody = null
+			if (!error && response.statusCode >= 200 && response.statusCode < 300) {
+				//logger.info(body)
+				parsedBody = body
+			}
+			else{
+			  	logger.error(response.statusCode + error)
+			  	parsedBody = ''
+			}
+			data.headers = response.headers
+			data.statusCode = response.statusCode
+			var info = {info: {body : parsedBody}}
+			data.body = info
+			console.log(data)
+			res.send(JSON.stringify(data))
+			
+	    })
+
+	})
+}
+
+
 exports.get = function(req, res){
 	var message = {}
     req.on('data', function (data) {

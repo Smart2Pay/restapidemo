@@ -1,6 +1,7 @@
 .myGrid {
-    width: 400px;
-    height: 450px;
+    width: 30em;
+    height: 20em;
+    margin-bottom: 2em;
   }
 
 .title{
@@ -161,7 +162,7 @@
 
 .editable.header{
 	width: auto;
-	min-height: 2em;	
+	min-height: 2.5em;	
 	clear: both;
 }
 
