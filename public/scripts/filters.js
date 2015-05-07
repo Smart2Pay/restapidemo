@@ -36,6 +36,7 @@ paymentsApp.filter('cleanHtml', function (){
     var output = input
       .replace(/(<br>)/g, '')
       .replace(/(<br\/>)/g, '')
+      .replace(/(amp;)/g, '')
       console.log('output:' + output)
       return output;
   };

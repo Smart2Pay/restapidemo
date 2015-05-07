@@ -7,7 +7,7 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
 	$scope.$on('reload', function() {$scope.init()});
 
 	$scope.applySettings = function(){
-		alert(JSON.stringify($filter('cleanJson')($scope.appSettings)))
+		//alert(JSON.stringify($filter('cleanJson')($scope.appSettings)))
 		$localStorage.appSettings = JSON.stringify($filter('cleanJson')($scope.appSettings))
 		//$('#appSettingsDialog').modal('hide').data( 'modal', null );
 		$scope.init()
@@ -242,6 +242,21 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
 		$scope.responseHeader = null
 		$scope.responseStatusCode = null
 		$scope.requestTrxId = null
+		$scope.requestFilterTrx = null
+		$scope.trxFilters = {
+						    limit: '3',
+						    startdate: '201505012000',
+						    enddate: '20150503210000',
+						    methodID: '2',
+						    country: 'DE',
+						    merchantTransactionId: '12345678',
+						    currency: 'EUR',
+						    minimumAmount: '500',
+						    maximumAmount: '1000'
+						}
+
+		$scope.selectedFilters = {}
+
 		var parsedAppSettings = null
 		try{
 
@@ -269,11 +284,88 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
 		
 	}
 
+	$scope.updateFilters = function(){
+		//alert(JSON.stringify($scope.selectedFilters))
+		$scope.requestFilterTrx = null
+		for (var key in $scope.selectedFilters) {
+		  if ($scope.selectedFilters.hasOwnProperty(key)) {
+		    if($scope.selectedFilters[key]){
+		    	if($scope.requestFilterTrx && $scope.requestFilterTrx.length > 0)
+		    		$scope.requestFilterTrx += '&' + key + '=' + $scope.trxFilters[key]
+		    	else{
+		    		$scope.requestFilterTrx = key + '=' + $scope.trxFilters[key]
+		    	}
+		    }
+		    else{
+
+		    }
+		  }
+		}
+	}
+
+	$scope.getFilteredTrxInfoChanged = function(){
+
+		/*if($scope.requestFilterTrx.indexOf('&')>=0){
+			var keyValues = ($filter('cleanHtml')($scope.requestFilterTrx)).split('&')
+			for(var i=0; i<keyValues.length; i++){
+				var filter = keyValues[i].split('=')
+				for(var j=0; j< filter.length; j++){
+
+				}
+			}
+		}
+		else{
+			var filter = $scope.requestFilterTrx.split('=')
+
+		}*/
+
+		$scope.requestDefinition = 'GET ' + $scope.appSettings.host + '/payments?' + $filter('cleanHtml')($scope.requestFilterTrx)
+
+		var req = {
+			url : 'payments/get?'+$filter('cleanHtml')($scope.requestFilterTrx),
+			method : 'post',
+			data : {
+				headers: $scope.requestHeader,
+			}
+		}
+		//console.log('starting post2')
+
+		$('.wait').show()
+		$http(req)
+				.success(function(data) {
+					//console.log(data.headers)
+					$scope.responseBody = data.body.info.body
+					$scope.responseStatusCode = data.statusCode
+					$scope.responseHeader = JSON.stringify(data.headers, null, "  ")
+					
+					if($scope.responseStatusCode >= 200 && $scope.responseStatusCode <300 ){
+						responseArray = JSON.parse($scope.responseBody)
+						$scope.myData = []
+						responseArray.Payments.forEach(function(item){
+							$scope.myData.push(
+								{
+									'ID' : item.ID,
+									'MerchantTransactionID' : item.MerchantTransactionID,
+									'Amount' : item.Amount,
+									'CCY' : item.Currency,
+									'Status' : item.Status.Info,
+									'MethodID' : item.MethodID
+								}
+							)
+						})
+						
+						
+						console.log(data.body)
+					}
+					$('.wait').hide()
+				})
+
+	}
+
 	$scope.getTrxIdInfoChanged = function(){
 		$scope.requestTrxId = $filter('cleanHtml')($scope.requestTrxId)
 
 		if(!$scope.requestTrxId || $scope.requestTrxId.length == 0){
-			$scope.init()
 			return
 		}
 		$scope.requestDefinition = 'GET ' + $scope.appSettings.host + '/payments/' + $scope.requestTrxId

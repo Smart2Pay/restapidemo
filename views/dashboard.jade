@@ -3,3 +3,12 @@
 p.label Get info on Transaction ID
 	.editable.header(name="getTrxIdInfo" ng-model="requestTrxId" ng-bind-html="requestTrxId | cleanHtml" contenteditable="true"
 		ng-model-options="{ updateOn: 'blur' }" ng-change="getTrxIdInfoChanged()")
+
+
+p.label Filters
+	.editable.header(name="getFilteredTrxInfo" ng-model="requestFilterTrx" ng-bind-html="requestFilterTrx | cleanHtml" contenteditable="true" ng-model-options="{ updateOn: 'blur' }" ng-change="getFilteredTrxInfoChanged()")
+
+
+div(ng-repeat="(filterName, filterValueSample) in trxFilters")
+	input(ng-cloack type="checkbox" group="trxFilters" ng-click="updateFilters()" ng-model="selectedFilters[filterName]") 
+	&nbsp; {{filterName}}

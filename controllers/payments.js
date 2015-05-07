@@ -128,8 +128,15 @@ exports.get = function(req, res){
 
     })
     req.on('end', function () { 
+		qs = '';
+		console.log(req.query)
+		for(key in req.query) {
+		    qs += key + '=' + req.query[key] + '&';
+		}
+		qs = qs.slice(0, qs.length - 1);
+
 		 var options = {
-			 url: config.get('appSettings.host') + '/payments',
+			 url: config.get('appSettings.host') + '/payments?' + qs,
 	    	 headers: {
 	        	"Authorization": "Basic " + message['headers']
 	    	}
