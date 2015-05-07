@@ -221,11 +221,10 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
 					$scope.responseHeader = JSON.stringify(data.headers, null, "  ")
 					//console.log($scope.responseBody)
 					$('.wait').hide()
-					console.log(data.body)
+					//console.log(data.body)
 					var payment = $filter('cleanJson')(data.body)
-					if(payment && payment.RedirectURL && $scope.appSettings.autoRedirect){
-						console.log(payment.RedirectURL)
-						window.location = payment.RedirectURL
+					if(payment && payment.Payment.RedirectURL && $scope.appSettings.autoRedirect){
+						window.open(payment.Payment.RedirectURL)
 					}
 
 				})
@@ -245,7 +244,7 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
 		$scope.requestFilterTrx = null
 		$scope.trxFilters = {
 						    limit: '3',
-						    startdate: '201505012000',
+						    startdate: '20150501200000',
 						    enddate: '20150503210000',
 						    methodID: '2',
 						    country: 'DE',
@@ -287,6 +286,7 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
 	$scope.updateFilters = function(){
 		//alert(JSON.stringify($scope.selectedFilters))
 		$scope.requestFilterTrx = null
+		console.log($scope.selectedFilters)
 		for (var key in $scope.selectedFilters) {
 		  if ($scope.selectedFilters.hasOwnProperty(key)) {
 		    if($scope.selectedFilters[key]){
@@ -301,23 +301,10 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
 		    }
 		  }
 		}
+		console.log($scope.requestFilterTrx)
 	}
 
 	$scope.getFilteredTrxInfoChanged = function(){
-
-		/*if($scope.requestFilterTrx.indexOf('&')>=0){
-			var keyValues = ($filter('cleanHtml')($scope.requestFilterTrx)).split('&')
-			for(var i=0; i<keyValues.length; i++){
-				var filter = keyValues[i].split('=')
-				for(var j=0; j< filter.length; j++){
-
-				}
-			}
-		}
-		else{
-			var filter = $scope.requestFilterTrx.split('=')
-
-		}*/
 
 		$scope.requestDefinition = 'GET ' + $scope.appSettings.host + '/payments?' + $filter('cleanHtml')($scope.requestFilterTrx)
 
@@ -348,7 +335,7 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
 									'MerchantTransactionID' : item.MerchantTransactionID,
 									'Amount' : item.Amount,
 									'CCY' : item.Currency,
-									'Status' : item.Status.Info,
+									'Status' : item.Status? item.Status.Info : null,
 									'MethodID' : item.MethodID
 								}
 							)

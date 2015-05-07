@@ -31,13 +31,13 @@ paymentsApp.filter('cleanJson', function (){
 paymentsApp.filter('cleanHtml', function (){
   return function(input) {
     if(!input) return input
-    console.log('input:' + input)
+    //console.log('input:' + input)
     if(typeof input == 'object') return input
     var output = input
       .replace(/(<br>)/g, '')
       .replace(/(<br\/>)/g, '')
       .replace(/(amp;)/g, '')
-      console.log('output:' + output)
+      //console.log('output:' + output)
       return output;
   };
 });

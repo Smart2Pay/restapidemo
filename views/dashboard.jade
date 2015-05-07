@@ -6,7 +6,7 @@ p.label Get info on Transaction ID
 
 
 p.label Filters
-	.editable.header(name="getFilteredTrxInfo" ng-model="requestFilterTrx" ng-bind-html="requestFilterTrx | cleanHtml" contenteditable="true" ng-model-options="{ updateOn: 'blur' }" ng-change="getFilteredTrxInfoChanged()")
+	.editable.header(name="getFilteredTrxInfo" ng-model="requestFilterTrx" ng-bind-html="requestFilterTrx" contenteditable="true" ng-model-options="{ updateOn: 'blur' }" ng-change="getFilteredTrxInfoChanged()")
 
 
 div(ng-repeat="(filterName, filterValueSample) in trxFilters")
