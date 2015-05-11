@@ -1,37 +1,35 @@
-paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localStorage) {
-	
-	angular.element(document).ready(function () {
-        //$scope.init()
-    });
+//GenericController
+paymentsApp.controller('genericCtrl',  function($scope, $http, $filter, $localStorage) {
+	$scope.$on('$viewContentLoaded', 
+		function() {
+			$scope.$broadcast('eventPageReload', null)
+		})
+})
 
-	$scope.$on('reload', function() {$scope.init()});
+//SettingsControler
+.controller('settingsCtrl', function($scope, $http, $localStorage){
+
+	$scope.$on('eventPageReload', function() {$scope.init()})
 
 	$scope.applySettings = function(){
 		//alert(JSON.stringify($filter('cleanJson')($scope.appSettings)))
-		$localStorage.appSettings = JSON.stringify($filter('cleanJson')($scope.appSettings))
-		//$('#appSettingsDialog').modal('hide').data( 'modal', null );
-		$scope.init()
-		
+		$localStorage.appSettings = $scope.appSettings
+		//$('#appSettingsDialog').modal('hide').data( 'modal', null )
+		$scope.$broadcast('eventSettingsChanged', null)
 	}
 
 	$scope.restoreSettings = function(){
-		var answer = confirm("Are you sure you want to reset settings to default?");
+		var answer = confirm("Are you sure you want to reset settings to default?")
 		if(answer){
 			delete $localStorage.appSettings
 	        $scope.init()
 	    }
-		
 	}
 
-
+	
 	$scope.init = function(){
-		$scope.requestDefinition = null
-		$scope.responseBody = null
-		$scope.responseHeader = null
-		$scope.responseStatusCode = null
 		var parsedAppSettings = null
 		try{
-
 			parsedAppSettings = JSON.parse($localStorage.appSettings)
 			console.log(parsedAppSettings)
 		}
@@ -39,10 +37,10 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
 			console.log("Could not load from local storage")
 		}
 		if(parsedAppSettings){ //check if anything in local storage, if so load from there
-			$scope.appSettings = parsedAppSettings
-			console.log("load from localStorage")
-			//console.log($scope.appSettings)
-			populateFields($scope.appSettings)
+				$scope.appSettings = parsedAppSettings
+				console.log("load from localStorage")
+				//console.log($scope.appSettings)
+				$scope.$broadcast('eventSettingsChanged', null)
 		}
 		else{
 			console.log("load from defaults")
@@ -50,37 +48,55 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
 			$http(req).success(function(appSettings) {
 				$scope.appSettings = appSettings
 				//console.log($scope.appSettings)
-				populateFields($scope.appSettings)			
+				$scope.$broadcast('eventSettingsChanged', null)		
 			})
 		}
-		
+	}
+})
+//PaymentsController
+.controller('paymentsCtrl',  function($scope, $http, $filter, $localStorage) {
+	
+	angular.element(document).ready(function () {
+        //$scope.init()
+    })
+
+	//This is managed by settingsController which is emmiting eventSettingsChanged event
+	//$scope.$on('eventPageReload', function() {$scope.init()})
+
+	$scope.$on('eventSettingsChanged', function(){$scope.init()})
+
+	$scope.init = function(){
+		$scope.requestDefinition = null
+		$scope.responseBody = null
+		$scope.responseHeader = null
+		$scope.responseStatusCode = null
+		populateFields($scope.appSettings)
 	}
 
 	function populateFields(appSettings){
-		console.log(appSettings)
 		var num = Math.ceil(Math.random()*10000000)
 		appSettings.Payment.MerchantTransactionID = num
       	$scope.requestDefinition = 'POST ' + appSettings.host + '/payments/'
       	$scope.requestHeader = window.btoa(appSettings.APIKEY)
 		$scope.requestBody = JSON.stringify({Payment: appSettings.Payment},null, "  ")
-		$scope.products = appSettings.products;	
+		$scope.products = appSettings.products
 		$scope.shoppingCart = []
-		$scope.referenceNumber = null;
-		$scope.customer = null;
-		$scope.billingAddress = null;
-		$scope.shoppingCart[0] = true;
+		$scope.referenceNumber = null
+		$scope.customer = null
+		$scope.billingAddress = null
+		$scope.shoppingCart[0] = true
 		for(var $i=1;$i<$scope.products.length;$i++){
 				$scope.shoppingCart[$i] = false
 		}
 		$scope.updateShoppingCart()
 		$scope.methods = null
 		$scope.paymentMethod = null
-		$scope.tempMessage = "Please choose your country first..."
+		$scope.tempMessage = "Please choose your country ..."
 	}
 
 	$scope.updateShoppingCart = function(){
 		var payment = JSON.parse($scope.requestBody)
-		payment.Payment.Amount = 0;
+		payment.Payment.Amount = 0
 		var i = 0
 		$scope.shoppingCart.forEach(function(productIndex){
 			if(productIndex){
@@ -111,7 +127,7 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
 			$scope.methods = null
 			$scope.paymentMethod = null
 			payment.Payment.BillingAddress = {}
-			payment.Payment.BillingAddress.Country = $scope.billingAddress.country;	
+			payment.Payment.BillingAddress.Country = $scope.billingAddress.country
 			delete payment.Payment.MethodID
 			var req = {url: '/payments/methods?country=' + $scope.billingAddress.country}
 			$scope.tempMessage = "Loading payment method list..."
@@ -132,8 +148,6 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
 					$scope.tempMessage = "Error loading payment methods: " + data.Message
 				})
 
-			
-
 		}
 		else{
 			delete payment.Payment.BillingAddress
@@ -153,7 +167,7 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
 		}
 
 		if($scope.customer){
-			var allNull = true;
+			var allNull = true
 			if($scope.customer.firstName ){
 				payment.Payment.Customer.FirstName = $scope.customer.firstName
 				allNull= false
@@ -230,10 +244,10 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
 				})
 	}
 })
+//PaymentsGetController
 .controller('paymentsGetCtrl',  function($scope, $http, $filter, $localStorage) {
-	angular.element(document).ready(function () {
-        //$scope.init()
-    });
+
+	$scope.$on('eventSettingsChanged', function(){$scope.init()})
 
 	$scope.init = function(){
 		$scope.requestDefinition = null
@@ -255,31 +269,7 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
 						}
 
 		$scope.selectedFilters = {}
-
-		var parsedAppSettings = null
-		try{
-
-			parsedAppSettings = JSON.parse($localStorage.appSettings)
-			console.log(parsedAppSettings)
-		}
-		catch(e){
-			console.log("Could not load from local storage")
-		}
-		if(parsedAppSettings){ //check if anything in local storage, if so load from there
-			$scope.appSettings = parsedAppSettings
-			console.log("load from localStorage")
-			//console.log($scope.appSettings)
-			populateFields($scope.appSettings)
-		}
-		else{
-			console.log("load from defaults")
-			var req = {url: '/payments/appSettings'}
-			$http(req).success(function(appSettings) {
-				$scope.appSettings = appSettings
-				//console.log($scope.appSettings)
-				populateFields($scope.appSettings)			
-			})
-		}
+		populateFields($scope.appSettings)	
 		
 	}
 
@@ -423,15 +413,59 @@ paymentsApp.controller('paymentsCtrl',  function($scope, $http, $filter, $localS
 					//TODO: parse response
 				})
 	}
-	$scope.$on('reload', function() {$scope.init()});
 
+})
 
+//MethodsController
+.controller('methodsCtrl', function($scope, $http, $filter, $localStorage, $sce){
 	
+	$scope.$on('eventSettingsChanged', function(){$scope.init()})
+
+	$scope.init = function(){
+		populateFields($scope.appSettings)
+		$scope.methods = []
+		$scope.methodInfo = null
+		$scope.methodInfoHTMLDescription = null
+		$scope.requestDefinition = 'GET ' + $scope.appSettings.host + '/methods'
+
+		var req = {url: '/payments/methods'}
+			
+		$http(req)
+			.success(function(data) {
+					$scope.methods = data.Methods
+					$scope.responseStatusCode = 200
+					$scope.responseBody = JSON.stringify(data,null, "  ")
+					//console.log(JSON.stringify(data))
+
+			})
+			/*.error(function(data, status, headers, config){
+
+				$scope.tempMessage = "Error loading payment methods: " + data.Message
+			})*/
+	}
+
+	function populateFields(appSettings){
+      	$scope.requestDefinition = 'GET ' + appSettings.host + '/methods/'
+      	$scope.requestHeader = window.btoa(appSettings.APIKEY)
+		$scope.requestBody = null
+	}		
+
+	$scope.methodChanged = function(){
+		$scope.methodInfo = {}
+		$scope.requestDefinition = 'GET ' + $scope.appSettings.host + '/methods/' + $scope.selectedMethod.ID 
+
+		var req = {url: '/payments/methods/' + $scope.selectedMethod.ID}
+			
+		$http(req)
+			.success(function(data) {
+					$scope.methodInfo = data.Method
+					$scope.methodInfoHTMLDescription = $sce.trustAsHtml($scope.methodInfo.Description)
+					$scope.responseStatusCode = 200
+					$scope.responseBody = JSON.stringify(data,null, "  ")
+					//console.log(JSON.stringify(data))
+
+			})
+	}
 })
-.controller('genericCtrl',  function($scope, $http, $filter, $localStorage) {
-	$scope.$on('$viewContentLoaded', 
-		function() {
-			$scope.$broadcast('reload', null)
-		})
-})
+
 

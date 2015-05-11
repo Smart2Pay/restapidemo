@@ -18,7 +18,27 @@ exports.appSettings = function(req,res){
 exports.methods = function(req,res){
 	 var paymentRequest = config.get('appSettings')
      var options = {
-			 url: config.get('appSettings.host') + '/methods?country='+req.query.country,
+			 url: config.get('appSettings.host') + '/methods?' + (req.query.country ? 'country='+req.query.country : ''),
+	    	 headers: {
+	        	"Authorization": "Basic " + new Buffer(paymentRequest.APIKEY).toString('base64')
+	    	}
+		}  	   
+	console.log(options)
+    request.get(options, function (error, response, body) { 
+			var data = {}
+			console.log(error)
+			console.log(body)
+			res.statusCode = response.statusCode
+			res.send(body)
+		
+	})
+}
+
+
+exports.getMethodId = function(req,res){
+	 var paymentRequest = config.get('appSettings')
+     var options = {
+			 url: config.get('appSettings.host') + '/methods/' + (req.params.id ? req.params.id  : ''),
 	    	 headers: {
 	        	"Authorization": "Basic " + new Buffer(paymentRequest.APIKEY).toString('base64')
 	    	}

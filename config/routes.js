@@ -9,6 +9,7 @@ module.exports = function (app, passport) {
 	app.post('/payments/get', paymentsController.get)
 	app.post('/payments/get/:id', paymentsController.getTrxId)		
 	app.get('/payments/methods', paymentsController.methods)
+	app.get('/payments/methods/:id', paymentsController.getMethodId)
 	app.get('/payments/appSettings', paymentsController.appSettings)
 	
 	

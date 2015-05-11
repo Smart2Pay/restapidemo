@@ -1,6 +1,6 @@
 .myGrid {
     width: 30em;
-    height: 20em;
+    height: 25em;
     margin-bottom: 2em;
   }
 
@@ -209,6 +209,16 @@
 .modal-body{
 	min-height: 20em;
 }
+
+.modal-content {
+	padding: 2em;
+}
+
+.settingsTextArea{
+	min-width: 43.5em;
+	min-height: 40em;
+}
+
 
 
 @media (min-width: 600px){

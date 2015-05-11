@@ -9,4 +9,4 @@ p.label Response Status Code
 p.label Response Headers
 	.editable.header(name="responseHeader" ng-model="responseHeader" ng-bind-html="responseHeader")
 p.label Response Body
-	.editable.response(name="responseBody" ng-model="responseBody" ng-bind-html="responseBody | formatJson")
+	pre.editable.response(name="responseBody" ng-model="responseBody" ng-bind-html="responseBody")

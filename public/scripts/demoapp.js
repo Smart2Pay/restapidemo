@@ -11,6 +11,10 @@ paymentsApp.config(['$routeProvider', '$locationProvider',
 	        templateUrl: 'partials/payments-post',
 	        controller: 'paymentsCtrl'
 	      })
+	      .when('/methods/get', {
+	      	templateUrl: 'partials/methods-get',
+	      	controller: 'methodsCtrl'
+	      })
 	      .otherwise(
 	      {
 	      	redirectTo: '/payments'

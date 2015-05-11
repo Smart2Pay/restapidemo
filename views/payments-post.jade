@@ -1,6 +1,6 @@
 
 block content
-	.container(ng-controller="paymentsCtrl")
+	.container(ng-controller="settingsCtrl")
 		.jumbotron
 			.jumbotronHeader.clearfix
 					.title
@@ -12,7 +12,7 @@ block content
 							i.fa.fa-indent
 						a(onclick="$('.modal.fade').modal('show') ")
 							i.fa.fa-gears
-			.contentWrapper#payments
+			.contentWrapper#payments(ng-controller="paymentsCtrl")
 				.row
 					.col-md-5.clearfix#business
 							include checkout
