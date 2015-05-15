@@ -1,0 +1,40 @@
+select(ng-model="selectedMethod", ng-options="item.DisplayName for item in methods", ng-change="methodChanged()")
+	option(value="")
+
+br
+br
+p
+	.methodLogo(ng-show="methodInfo")
+		img(ng-src="https://apitest.smart2pay.com/{{methodInfo.LogoURL}}")
+	
+	&nbsp
+	.methodDescription(ng-bind-html="methodInfoHTMLDescription")
+	
+	br
+
+	.methodOptions(ng-show="methodInfo.Options[0].LogoURL")
+		| Options: 
+		ul
+			li(ng-repeat="option in methodInfo.Options") 
+				img(ng-src="https://apitest.smart2pay.com/{{option.LogoURL}}")
+	
+	br
+
+	.methodCountries(ng-show="methodInfo.Countries")
+		| Countries: 
+		b
+			{{methodInfo.Countries.join(", ")}}
+	
+	br
+	.methodCurrencies(ng-show="methodInfo.Currencies")
+		| Currencies: 
+		b
+			{{methodInfo.Currencies.join(", ")}}
+
+	br
+	.methodGuranteed(ng-show="methodInfo.Guaranteed")
+		| Guaranteed: 
+		b 
+			{{methodInfo.Guaranteed &&'Yes' || 'No'}}
+
+
